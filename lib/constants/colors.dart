@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-var orange = Color(0xffF87247);
+var orange = Color(0xffFB7145);
 var teal = Color(0xff64F1F4);
 var blue = Color(0xff3169DE);
 var darkBlue = Color(0xff0A1965);

@@ -39,6 +39,7 @@ dependencies:
   stacked: ^2.1.8
   stacked_services: ^0.8.12
   syncfusion_flutter_charts: ^19.2.56
+  syncfusion_flutter_gauges: ^19.2.57
 
 
 dev_dependencies:
