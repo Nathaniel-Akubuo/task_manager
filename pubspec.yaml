@@ -70,10 +70,14 @@ flutter:
       fonts:
         - asset: fonts/Roboto-Regular.ttf
 
-    - family: Consolas
+    - family: Agipo
       fonts:
-        - asset: fonts/Consolas.ttf
+        - asset: fonts/Agipo.ttf
 
     - family: Segoe
       fonts:
         - asset: fonts/Segoe UI.ttf
+
+    - family: Seconda
+      fonts:
+        - asset: fonts/Seconda.ttf

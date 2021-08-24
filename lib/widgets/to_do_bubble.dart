@@ -22,43 +22,35 @@ class ToDoBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(
         key: Key(keyValue),
         background: Container(
-          color: theme.primaryColor,
+          color: backgroundColor,
         ),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Card(
-            elevation: 2,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: grey,
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: Row(
-                children: [
-                  Checkbox(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: grey, borderRadius: BorderRadius.circular(15)),
+            child: Row(
+              children: [
+                Transform.scale(
+                  scale: 1.3,
+                  child: Checkbox(
                       activeColor: Colors.grey,
-                      shape: CircleBorder(side: BorderSide(color: blue)),
                       value: isChecked,
                       onChanged: onChecked),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Text(title,
-                          style: isDone
-                              ? kDoneTaskStyle
-                              : theme.textTheme.subtitle2),
-                    ),
-                  )
-                ],
-              ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(title, style: isDone ? kDoneTaskStyle : kAgipo),
+                  ),
+                )
+              ],
             ),
           ),
         ),

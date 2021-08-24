@@ -26,7 +26,8 @@ void main() async {
   isAuthenticated = preferences!.getBool('isAuthenticated');
   preferences!.setBool('isFirstRun', false);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: backgroundColor, statusBarIconBrightness: Brightness.light));
+      statusBarColor: backgroundColor,
+      statusBarIconBrightness: Brightness.light));
   runApp(MyApp());
 }
 
@@ -44,8 +45,9 @@ class MyApp extends StatelessWidget {
           navigatorKey: StackedService.navigatorKey,
           onGenerateRoute: StackedRouter().onGenerateRoute,
           theme: ThemeData(
+            scaffoldBackgroundColor: backgroundColor,
             canvasColor: backgroundColor,
-            unselectedWidgetColor: blue,
+            unselectedWidgetColor: Colors.grey,
             checkboxTheme: CheckboxThemeData(shape: CircleBorder()),
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.transparent,
