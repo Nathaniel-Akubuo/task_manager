@@ -234,24 +234,34 @@ class Home extends StatelessWidget {
                         children: [
                           Text('Tasks ',
                               style: kAgipo.copyWith(
-                                  fontSize: 20, letterSpacing: 1.5)),
+                                  fontSize: 20,
+                                  letterSpacing: 1.5,
+                                  fontWeight: FontWeight.bold)),
                           StreamBuilder(
-                            stream: model.c(context),
+                            stream: model.count(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasData) {
                                 return Text(
                                     snapshot.data!.docs.length.toString(),
-                                    style: kAgipo);
+                                    style: kAgipo.copyWith(
+                                        color: teal,
+                                        fontSize: 20,
+                                        letterSpacing: 1.5,
+                                        fontWeight: FontWeight.bold));
                               } else
-                                return Text('0', style: kAgipo);
+                                return Text('0',
+                                    style: kAgipo.copyWith(
+                                        fontSize: 20,
+                                        letterSpacing: 1.5,
+                                        fontWeight: FontWeight.bold));
                             },
                           ),
                         ],
                       ),
                       verticalSpaceRegular,
                       StreamBuilder(
-                        stream: model.getUndone(context).snapshots(),
+                        stream: model.getUndone().snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                                 snapshot) {
@@ -261,7 +271,8 @@ class Home extends StatelessWidget {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
-                                var currentItem = snapshot.data!.docs[index].data();
+                                var currentItem =
+                                    snapshot.data!.docs[index].data();
                                 return ToDoBubble(
                                     title: currentItem['item'],
                                     onChecked: (v) => tasks.toggleDone(
@@ -278,24 +289,26 @@ class Home extends StatelessWidget {
                       ),
                       Divider(color: Colors.grey),
                       StreamBuilder(
-                        stream: model.getDone(context).snapshots(),
+                        stream: model.getDone().snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                            snapshot) {
+                                snapshot) {
                           if (snapshot.hasData) {
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
-                                var currentItem = snapshot.data!.docs[index].data();
+                                var currentItem =
+                                    snapshot.data!.docs[index].data();
                                 return ToDoBubble(
                                     title: currentItem['item'],
                                     onChecked: (v) => tasks.toggleDone(
                                         TaskModel.fromJson(currentItem)),
                                     onDismissed: (_) =>
-                                        tasks.deleteUndone(currentItem['id']),
+                                        tasks.deleteDone(currentItem['id']),
                                     onTap: () {},
+                                    isChecked: currentItem['isChecked'],
                                     isDone: currentItem['isChecked']);
                               },
                             );

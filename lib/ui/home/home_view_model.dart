@@ -1,37 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
-import 'package:task_manager/services/user_service.dart';
+import 'package:task_manager/constants/global_variables.dart';
 import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class HomeViewModel extends BaseViewModel {
-  showBottomSheet(context) => showModalBottomSheet(
+  void showBottomSheet(context) => showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: backgroundColor,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15),
+        ),
+      ),
       context: context,
       builder: (context) => ModalBottomSheet());
 
-  getUndone(context) {
-    var user = Provider.of<UserService>(context, listen: false);
+  getUndone() {
     return FirebaseFirestore.instance
-        .collection('${user.email}-tasks-undone')
-        .orderBy('dateCreated');
-  }
-  getDone(context) {
-    var user = Provider.of<UserService>(context, listen: false);
-    return FirebaseFirestore.instance
-        .collection('${user.email}-tasks-done')
+        .collection('${preferences!.getString('email')}-tasks-undone')
         .orderBy('dateCreated');
   }
 
-  c(context) {
-    var user = Provider.of<UserService>(context, listen: false);
+  getDone() {
     return FirebaseFirestore.instance
-        .collection('${user.email}-tasks-undone')
+        .collection('${preferences!.getString('email')}-tasks-done')
+        .orderBy('dateCreated', descending: true);
+  }
+
+  count() {
+    return FirebaseFirestore.instance
+        .collection('${preferences!.getString('email')}-tasks-undone')
         .snapshots();
   }
 }

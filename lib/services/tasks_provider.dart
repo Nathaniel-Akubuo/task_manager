@@ -11,23 +11,24 @@ class TasksProvider extends ChangeNotifier {
       .collection('${preferences!.getString('email')}-tasks-done');
 
   void addToDo(TaskModel taskModel) {
-    taskModel.id = homeUndone.doc().id;
-    homeUndone.doc().set(taskModel.toJson());
+    var doc = homeUndone.doc();
+    taskModel.id = doc.id;
+    doc.set(taskModel.toJson());
   }
 
   toggleDone(TaskModel taskModel) {
     if (taskModel.isChecked) {
       taskModel.isChecked = false;
       deleteDone(taskModel.id);
-      homeUndone.add(taskModel.toJson());
-    } else {
+      homeUndone.doc(taskModel.id).set(taskModel.toJson());
+    } else if (!taskModel.isChecked) {
       deleteUndone(taskModel.id);
       taskModel.isChecked = true;
-      homeDone.add(taskModel.toJson());
+      homeDone.doc(taskModel.id).set(taskModel.toJson());
     }
   }
 
   deleteUndone(id) => homeUndone.doc(id).delete();
 
-  deleteDone(id) => homeUndone.doc(id).delete();
+  deleteDone(id) => homeDone.doc(id).delete();
 }
