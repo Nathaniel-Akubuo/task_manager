@@ -6,12 +6,10 @@ import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
-import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/services/authentication.dart';
-import 'package:task_manager/services/tasks_provider.dart';
 import 'package:task_manager/widgets/progress_bubble.dart';
-import 'package:task_manager/widgets/project_bubble.dart';
-import 'package:task_manager/widgets/to_do_bubble.dart';
+import 'package:task_manager/widgets/project_bubble_builder.dart';
+import 'package:task_manager/widgets/list_stream_builder.dart';
 
 import 'home_view_model.dart';
 
@@ -19,8 +17,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<Authentication>(context, listen: false);
-    var tasks = Provider.of<TasksProvider>(context, listen: false);
-    final _mediaQuery = MediaQuery.of(context).size;
     return ViewModelBuilder<HomeViewModel>.reactive(
         builder: (context, model, child) => SafeArea(
               child: Scaffold(
@@ -52,22 +48,7 @@ class Home extends StatelessWidget {
                           style: kAgipo.copyWith(
                               fontSize: 20, letterSpacing: 1.5)),
                       verticalSpaceRegular,
-                      Container(
-                        height: _mediaQuery.height * 0.225,
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => ProjectBubble(
-                            onTap: () {},
-                            percentage: 40,
-                            title: 'TRIP',
-                            color: teal,
-                            firstItem: 'Holiday in Norway',
-                            date: '',
-                          ),
-                          itemCount: 3,
-                        ),
-                      ),
+                      ProjectBubbleBuilder(),
                       verticalSpaceMedium,
                       Row(
                         children: [
@@ -92,76 +73,20 @@ class Home extends StatelessWidget {
                                 return Text('0',
                                     style: kAgipo.copyWith(
                                         fontSize: 20,
-                                        letterSpacing: 1.5,
                                         fontWeight: FontWeight.bold));
                             },
                           ),
                         ],
                       ),
                       verticalSpaceRegular,
-                      StreamBuilder(
-                        stream: model.getUndone().snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                var currentItem =
-                                    snapshot.data!.docs[index].data();
-                                return ToDoBubble(
-                                    title: currentItem['item'],
-                                    onChecked: (v) => tasks.toggleDone(
-                                        context: context,
-                                        taskModel:
-                                            TaskModel.fromJson(currentItem)),
-                                    onDismissed: (_) => tasks.deleteUndone(
-                                        context: context,
-                                        id: currentItem['id']),
-                                    onTap: () {},
-                                    isDone: currentItem['isChecked']);
-                              },
-                            );
-                          } else
-                            return Container();
-                        },
-                      ),
+                      UndoneListBuilder(
+                          stream: model.getUndone().snapshots(),
+                          isDoneList: false),
                       Divider(color: Colors.grey),
                       verticalSpaceSmall,
-                      StreamBuilder(
-                        stream: model.getDone().snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                                snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                var currentItem =
-                                    snapshot.data!.docs[index].data();
-                                return ToDoBubble(
-                                    title: currentItem['item'],
-                                    onChecked: (v) => tasks.toggleDone(
-                                        context: context,
-                                        taskModel:
-                                            TaskModel.fromJson(currentItem)),
-                                    onDismissed: (_) => tasks.deleteDone(
-                                        context: context,
-                                        id: currentItem['id']),
-                                    onTap: () {},
-                                    isChecked: currentItem['isChecked'],
-                                    isDone: currentItem['isChecked']);
-                              },
-                            );
-                          } else
-                            return Container();
-                        },
-                      ),
+                      UndoneListBuilder(
+                          stream: model.getDone().snapshots(),
+                          isDoneList: true),
                       verticalSpaceLarge,
                       verticalSpaceLarge,
                     ],

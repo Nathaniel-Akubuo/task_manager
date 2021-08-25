@@ -6,7 +6,6 @@ class UserService extends ChangeNotifier {
 
   set email(value) {
     preferences!.setString('email', value);
-    print(value);
     notifyListeners();
   }
 
