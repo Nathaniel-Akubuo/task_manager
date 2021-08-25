@@ -16,8 +16,8 @@ class ModalBottomSheet extends StatelessWidget {
     var task = Provider.of<TasksProvider>(context, listen: false);
     final _mediaQuery = MediaQuery.of(context).size;
     return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom * 0.8),
       child: Container(
         padding: kPadding,
         height: _mediaQuery.height * 0.4,

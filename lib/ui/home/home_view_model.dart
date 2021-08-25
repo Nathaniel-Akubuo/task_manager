@@ -7,15 +7,16 @@ import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class HomeViewModel extends BaseViewModel {
   void showBottomSheet(context) => showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(15),
+        isScrollControlled: true,
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(15),
+          ),
         ),
-      ),
-      context: context,
-      builder: (context) => ModalBottomSheet());
+        context: context,
+        builder: (context) => ModalBottomSheet(),
+      );
 
   getUndone() {
     return FirebaseFirestore.instance

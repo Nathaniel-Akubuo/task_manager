@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             scaffoldBackgroundColor: backgroundColor,
             canvasColor: backgroundColor,
-            unselectedWidgetColor: Colors.grey,
+            unselectedWidgetColor: blue,
             checkboxTheme: CheckboxThemeData(shape: CircleBorder()),
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.transparent,
