@@ -9,6 +9,7 @@ import 'package:task_manager/services/authentication.dart';
 import 'package:task_manager/services/projects_provider.dart';
 import 'package:task_manager/services/tasks_provider.dart';
 import 'package:task_manager/services/user_service.dart';
+import 'package:task_manager/services/util.dart';
 
 import 'app/app.router.dart';
 import 'constants/colors.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Authentication()),
         ChangeNotifierProvider(create: (context) => UserService()),
         ChangeNotifierProvider(create: (context) => ProjectsProvider()),
+        ChangeNotifierProvider(create: (context) => Util()),
       ],
       child: MaterialApp(
           navigatorKey: StackedService.navigatorKey,
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             scaffoldBackgroundColor: backgroundColor,
             canvasColor: backgroundColor,
-            unselectedWidgetColor: blue,
+            unselectedWidgetColor: Colors.grey,
             checkboxTheme: CheckboxThemeData(shape: CircleBorder()),
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.transparent,

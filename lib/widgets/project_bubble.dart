@@ -83,7 +83,6 @@ class ProjectBubble extends StatelessWidget {
                   style: kAgipo.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
-              verticalSpaceTiny,
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 height: 30,
