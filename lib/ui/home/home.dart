@@ -13,7 +13,14 @@ import 'package:task_manager/widgets/list_stream_builder.dart';
 
 import 'home_view_model.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     var auth = Provider.of<Authentication>(context, listen: false);
@@ -23,7 +30,7 @@ class Home extends StatelessWidget {
                 appBar: AppBar(
                   title: Text(
                     'Monday, 28',
-                    style: kAgipo.copyWith(fontSize: 20, letterSpacing: 1.5),
+                    style: kAgipo,
                   ),
                   actions: [
                     Center(
@@ -44,39 +51,13 @@ class Home extends StatelessWidget {
                       verticalSpaceMedium,
                       ProgressBubble(),
                       verticalSpaceMedium,
-                      Text('Projects',
-                          style: kAgipo.copyWith(
-                              fontSize: 20, letterSpacing: 1.5)),
+                      Text('Projects', style: kAgipo),
                       verticalSpaceRegular,
                       ProjectBubbleBuilder(),
                       verticalSpaceMedium,
-                      Row(
-                        children: [
-                          Text('Tasks ',
-                              style: kAgipo.copyWith(
-                                  fontSize: 20,
-                                  letterSpacing: 1.5,
-                                  fontWeight: FontWeight.bold)),
-                          StreamBuilder(
-                            stream: model.count(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                    snapshot.data!.docs.length.toString(),
-                                    style: kAgipo.copyWith(
-                                        color: teal,
-                                        fontSize: 20,
-                                        letterSpacing: 1.5,
-                                        fontWeight: FontWeight.bold));
-                              } else
-                                return Text('0',
-                                    style: kAgipo.copyWith(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold));
-                            },
-                          ),
-                        ],
+                      Text(
+                        'Tasks',
+                        style: kAgipo,
                       ),
                       verticalSpaceRegular,
                       UndoneListBuilder(
@@ -84,9 +65,56 @@ class Home extends StatelessWidget {
                           isDoneList: false),
                       Divider(color: Colors.grey),
                       verticalSpaceSmall,
-                      UndoneListBuilder(
-                          stream: model.getDone().snapshots(),
-                          isDoneList: true),
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(dividerColor: Colors.transparent),
+                        child: ExpansionTile(
+                          onExpansionChanged: (_) =>
+                              setState(() => isExpanded = !isExpanded),
+                          title: Row(
+                            children: [
+                              StreamBuilder(
+                                stream: model.getDone().snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Text(
+                                      snapshot.data!.docs.length.toString(),
+                                      style: kAgipo.copyWith(
+                                          fontSize: 15, color: Colors.grey),
+                                    );
+                                  } else
+                                    return Text(
+                                      '0',
+                                      style: kAgipo.copyWith(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                },
+                              ),
+                              Text(
+                                ' item(s) ticked',
+                                style: kAgipo.copyWith(
+                                    color: Colors.grey, fontSize: 15),
+                                textAlign: TextAlign.start,
+                              ),
+                            ],
+                          ),
+                          tilePadding: EdgeInsets.all(0),
+                          trailing: isExpanded
+                              ? Icon(Icons.keyboard_arrow_up,
+                                  color: Colors.grey)
+                              : Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.grey,
+                                ),
+                          children: [
+                            UndoneListBuilder(
+                                stream: model.getDone().snapshots(),
+                                isDoneList: true),
+                          ],
+                        ),
+                      ),
                       verticalSpaceLarge,
                       verticalSpaceLarge,
                     ],

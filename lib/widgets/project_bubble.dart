@@ -88,12 +88,12 @@ class ProjectBubble extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 height: 30,
                 decoration: BoxDecoration(
-                    color: color.withOpacity(0.2),
+                    color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15)),
                 child: Text(
                   DateFormat('MMMM dd').format(DateTime.now()),
                   style: kAgipo.copyWith(
-                    color: color.withOpacity(1),
+                    color: color,
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
                   ),

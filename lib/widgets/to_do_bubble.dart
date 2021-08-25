@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
@@ -45,7 +46,11 @@ class ToDoBubble extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Text(title, style: isDone ? kDoneTaskStyle : kAgipo),
+                    child: Text(title,
+                        style: isDone
+                            ? kTaskStyle.copyWith(
+                                decoration: TextDecoration.lineThrough, color: Colors.grey)
+                            : kTaskStyle),
                   ),
                 )
               ],
