@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
+import 'package:task_manager/services/user_service.dart';
 import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -11,4 +14,24 @@ class HomeViewModel extends BaseViewModel {
           borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
       context: context,
       builder: (context) => ModalBottomSheet());
+
+  getUndone(context) {
+    var user = Provider.of<UserService>(context, listen: false);
+    return FirebaseFirestore.instance
+        .collection('${user.email}-tasks-undone')
+        .orderBy('dateCreated');
+  }
+  getDone(context) {
+    var user = Provider.of<UserService>(context, listen: false);
+    return FirebaseFirestore.instance
+        .collection('${user.email}-tasks-done')
+        .orderBy('dateCreated');
+  }
+
+  c(context) {
+    var user = Provider.of<UserService>(context, listen: false);
+    return FirebaseFirestore.instance
+        .collection('${user.email}-tasks-undone')
+        .snapshots();
+  }
 }

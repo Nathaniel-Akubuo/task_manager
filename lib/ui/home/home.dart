@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
+import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/services/authentication.dart';
 import 'package:task_manager/services/tasks_provider.dart';
 import 'package:task_manager/widgets/project_bubble.dart';
@@ -23,7 +24,7 @@ class ToDoData {
 }
 
 class Home extends StatelessWidget {
-  List<ToDoData> data = [
+  final List<ToDoData> data = [
     ToDoData('Inbox', 70, teal),
     ToDoData('Meeting', 40, orange),
     ToDoData('Trip', 80, blue),
@@ -229,12 +230,28 @@ class Home extends StatelessWidget {
                         ),
                       ),
                       verticalSpaceMedium,
-                      Text('Tasks',
-                          style: kAgipo.copyWith(
-                              fontSize: 20, letterSpacing: 1.5)),
+                      Row(
+                        children: [
+                          Text('Tasks ',
+                              style: kAgipo.copyWith(
+                                  fontSize: 20, letterSpacing: 1.5)),
+                          StreamBuilder(
+                            stream: model.c(context),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                    snapshot.data!.docs.length.toString(),
+                                    style: kAgipo);
+                              } else
+                                return Text('0', style: kAgipo);
+                            },
+                          ),
+                        ],
+                      ),
                       verticalSpaceRegular,
                       StreamBuilder(
-                        stream: tasks.homeUndone.orderBy('dateCreated').snapshots(),
+                        stream: model.getUndone(context).snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                                 snapshot) {
@@ -244,14 +261,42 @@ class Home extends StatelessWidget {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
-                                var currentItem = snapshot.data!.docs[index];
+                                var currentItem = snapshot.data!.docs[index].data();
                                 return ToDoBubble(
-                                    title: currentItem.data()['item'],
-                                    onChecked: (v) {},
-                                    onDismissed: (onDismissed) {},
-                                    keyValue: index.toString(),
+                                    title: currentItem['item'],
+                                    onChecked: (v) => tasks.toggleDone(
+                                        TaskModel.fromJson(currentItem)),
+                                    onDismissed: (_) =>
+                                        tasks.deleteUndone(currentItem['id']),
                                     onTap: () {},
-                                    isDone: false);
+                                    isDone: currentItem['isChecked']);
+                              },
+                            );
+                          } else
+                            return Container();
+                        },
+                      ),
+                      Divider(color: Colors.grey),
+                      StreamBuilder(
+                        stream: model.getDone(context).snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                            snapshot) {
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                var currentItem = snapshot.data!.docs[index].data();
+                                return ToDoBubble(
+                                    title: currentItem['item'],
+                                    onChecked: (v) => tasks.toggleDone(
+                                        TaskModel.fromJson(currentItem)),
+                                    onDismissed: (_) =>
+                                        tasks.deleteUndone(currentItem['id']),
+                                    onTap: () {},
+                                    isDone: currentItem['isChecked']);
                               },
                             );
                           } else

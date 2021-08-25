@@ -8,7 +8,6 @@ class ToDoBubble extends StatelessWidget {
   final isChecked;
   final onChecked;
   final onDismissed;
-  final String keyValue;
   final VoidCallback onTap;
 
   ToDoBubble(
@@ -16,7 +15,6 @@ class ToDoBubble extends StatelessWidget {
       this.isChecked = false,
       required this.onChecked,
       required this.onDismissed,
-      required this.keyValue,
       required this.onTap,
       required this.isDone});
 
@@ -25,7 +23,7 @@ class ToDoBubble extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Dismissible(
-        key: Key(keyValue),
+        key: UniqueKey(),
         background: Container(
           color: backgroundColor,
         ),
