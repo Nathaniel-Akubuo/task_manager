@@ -6,6 +6,7 @@ import 'package:task_manager/constants/styles.dart';
 class CustomTextFormField extends StatefulWidget {
   final controller;
   final hintText;
+  final bool autoFocus;
   final isPasswordTextField;
   final TextInputType? keyboardType;
   final textInputAction;
@@ -16,6 +17,7 @@ class CustomTextFormField extends StatefulWidget {
   CustomTextFormField.regular(
       {this.controller,
       this.hintText,
+      this.autoFocus = false,
       this.isPasswordTextField = false,
       this.keyboardType,
       this.textInputAction,
@@ -26,6 +28,7 @@ class CustomTextFormField extends StatefulWidget {
   CustomTextFormField.password(
       {this.controller,
       this.hintText,
+      this.autoFocus = false,
       this.isPasswordTextField = true,
       this.keyboardType = TextInputType.text,
       this.textInputAction,
@@ -43,6 +46,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return TextFormField(
       style: kPoppins.copyWith(fontSize: 15, fontWeight: FontWeight.normal),
       controller: widget.controller,
+      autofocus: widget.autoFocus,
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       validator: widget.validator,
@@ -58,7 +62,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         hintText: widget.hintText,
         hintStyle: kPoppins.copyWith(
-            color: Color(0xff4E4446), fontSize: 15, fontWeight: FontWeight.normal),
+            color: Color(0xff4E4446),
+            fontSize: 15,
+            fontWeight: FontWeight.normal),
         suffixIcon: widget.isPasswordTextField
             ? IconButton(
                 icon: widget.obscureText
