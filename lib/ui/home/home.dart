@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
     var util = Provider.of<Util>(context, listen: true);
     return ViewModelBuilder<HomeViewModel>.reactive(
         builder: (context, model, child) => SafeArea(
-              child: Column(
+              child: Stack(
                 children: [
                   HiddenDrawer(),
                   GestureDetector(
