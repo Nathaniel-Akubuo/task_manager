@@ -31,10 +31,12 @@ class ModalBottomSheet extends StatelessWidget {
             verticalSpaceLarge,
             RoundedButton(
                 onTap: () {
-                  task.addToDo(TaskModel(
-                      dateCreated: DateTime.now(),
-                      item: controller.text,
-                      isChecked: false));
+                  task.addToDo(
+                      context: context,
+                      taskModel: TaskModel(
+                          dateCreated: DateTime.now(),
+                          item: controller.text,
+                          isChecked: false));
                   navigationService.back();
                 },
                 child: Text('ADD', style: kAgipo))

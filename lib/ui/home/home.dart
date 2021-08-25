@@ -115,9 +115,12 @@ class Home extends StatelessWidget {
                                 return ToDoBubble(
                                     title: currentItem['item'],
                                     onChecked: (v) => tasks.toggleDone(
-                                        TaskModel.fromJson(currentItem)),
-                                    onDismissed: (_) =>
-                                        tasks.deleteUndone(currentItem['id']),
+                                        context: context,
+                                        taskModel:
+                                            TaskModel.fromJson(currentItem)),
+                                    onDismissed: (_) => tasks.deleteUndone(
+                                        context: context,
+                                        id: currentItem['id']),
                                     onTap: () {},
                                     isDone: currentItem['isChecked']);
                               },
@@ -144,9 +147,12 @@ class Home extends StatelessWidget {
                                 return ToDoBubble(
                                     title: currentItem['item'],
                                     onChecked: (v) => tasks.toggleDone(
-                                        TaskModel.fromJson(currentItem)),
-                                    onDismissed: (_) =>
-                                        tasks.deleteDone(currentItem['id']),
+                                        context: context,
+                                        taskModel:
+                                            TaskModel.fromJson(currentItem)),
+                                    onDismissed: (_) => tasks.deleteDone(
+                                        context: context,
+                                        id: currentItem['id']),
                                     onTap: () {},
                                     isChecked: currentItem['isChecked'],
                                     isDone: currentItem['isChecked']);

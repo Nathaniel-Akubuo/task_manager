@@ -95,6 +95,7 @@ class Authentication extends ChangeNotifier {
               .then((value) => FirebaseAuth.instance.signOut())
           : FirebaseAuth.instance.signOut();
       navigationService.replaceWith(Routes.signIn);
+      preferences!.remove('email');
       notifyListeners();
     } catch (error) {
       print('Logout Error: $error');
