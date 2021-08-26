@@ -39,7 +39,8 @@ class ToDoBubble extends StatelessWidget {
                 Transform.scale(
                   scale: 1.3,
                   child: Checkbox(
-                      activeColor: Colors.grey,
+                      activeColor: Colors.grey[700],
+                      checkColor: backgroundColor,
                       value: isChecked,
                       onChanged: onChecked),
                 ),

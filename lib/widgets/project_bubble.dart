@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
@@ -8,7 +7,7 @@ import 'package:task_manager/constants/ui_helpers.dart';
 class ProjectBubble extends StatelessWidget {
   final double percentage;
   final String title;
-  final Color color;
+  final Color? color;
   final String? firstItem;
   final String date;
   final onTap;
@@ -72,7 +71,7 @@ class ProjectBubble extends StatelessWidget {
                 style: kAgipo.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: 13,
-                    color: Colors.grey),
+                    color: darkGrey),
               ),
               verticalSpaceTiny,
               Expanded(
@@ -87,10 +86,11 @@ class ProjectBubble extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 height: 30,
                 decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color!.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15)),
                 child: Text(
-                  DateFormat('MMMM dd').format(DateTime.now()),
+                  date,
+//                  DateFormat('MMMM dd').format(DateTime.now()),
                   style: kAgipo.copyWith(
                     color: color,
                     fontWeight: FontWeight.bold,

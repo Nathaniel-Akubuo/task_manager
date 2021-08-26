@@ -85,7 +85,7 @@ class ProgressBubble extends StatelessWidget {
                         style: kAgipo.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
-                            color: Colors.grey),
+                            color: darkGrey),
                       )
                     ],
                   ),
@@ -116,7 +116,7 @@ class ProgressBubble extends StatelessWidget {
                         style: kAgipo.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
-                            color: Colors.grey),
+                            color: darkGrey),
                       )
                     ],
                   ),
@@ -148,7 +148,7 @@ class ProgressBubble extends StatelessWidget {
                         style: kAgipo.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
-                            color: Colors.grey),
+                            color: darkGrey),
                       )
                     ],
                   ),

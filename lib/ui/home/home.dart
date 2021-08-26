@@ -6,7 +6,6 @@ import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
-import 'package:task_manager/services/authentication.dart';
 import 'package:task_manager/services/util.dart';
 import 'package:task_manager/ui/home/drawer.dart';
 import 'package:task_manager/widgets/progress_bubble.dart';
@@ -25,7 +24,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var auth = Provider.of<Authentication>(context, listen: false);
     var util = Provider.of<Util>(context, listen: true);
     return ViewModelBuilder<HomeViewModel>.reactive(
         builder: (context, model, child) => SafeArea(
@@ -36,14 +34,17 @@ class _HomeState extends State<Home> {
                     onTap: util.isDrawerOpen() ? util.closeDrawer : null,
                     child: AnimatedContainer(
                       duration: Duration(milliseconds: 250),
-                      transform:
-                          Matrix4.translationValues(util.xOffset, util.yOffset, 0)
-                            ..scale(util.scale),
+                      transform: Matrix4.translationValues(
+                          util.xOffset, util.yOffset, 0)
+                        ..scale(util.scale),
                       child: ClipRRect(
                         borderRadius: util.isDrawerOpen()
                             ? BorderRadius.circular(15)
                             : BorderRadius.zero,
                         child: Scaffold(
+                          backgroundColor: util.isDrawerOpen()
+                              ? grey.withOpacity(0.5)
+                              : backgroundColor,
                           appBar: AppBar(
                             leading: IconButton(
                                 icon: Icon(
@@ -58,13 +59,11 @@ class _HomeState extends State<Home> {
                               style: kAgipo,
                             ),
                             actions: [
-                              Center(
-                                child: IconButton(
-                                    icon: Icon(FontAwesomeIcons.calendarAlt,
-                                        size: 18),
-                                    onPressed: () => auth.logout(context)),
-                              ),
-                              horizontalSpaceRegular
+                              IconButton(
+                                  icon: Icon(FontAwesomeIcons.calendarAlt,
+                                      size: 18),
+                                  onPressed: () => {}),
+                              horizontalSpaceSmall
                             ],
                           ),
                           body: SingleChildScrollView(
@@ -91,11 +90,11 @@ class _HomeState extends State<Home> {
                                 Divider(color: Colors.grey),
                                 verticalSpaceSmall,
                                 Theme(
-                                  data: Theme.of(context)
-                                      .copyWith(dividerColor: Colors.transparent),
+                                  data: Theme.of(context).copyWith(
+                                      dividerColor: Colors.transparent),
                                   child: ExpansionTile(
-                                    onExpansionChanged: (_) =>
-                                        setState(() => isExpanded = !isExpanded),
+                                    onExpansionChanged: (_) => setState(
+                                        () => isExpanded = !isExpanded),
                                     title: Row(
                                       children: [
                                         StreamBuilder(
@@ -116,7 +115,8 @@ class _HomeState extends State<Home> {
                                                 '0',
                                                 style: kAgipo.copyWith(
                                                     fontSize: 15,
-                                                    fontWeight: FontWeight.bold),
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               );
                                           },
                                         ),
@@ -153,7 +153,7 @@ class _HomeState extends State<Home> {
                           floatingActionButton: FloatingActionButton(
                             child: Icon(Icons.add, size: 30),
                             backgroundColor: blue,
-                            onPressed: () => model.showBottomSheet(context),
+                            onPressed: () => model.showBottomSheet(context: context, isCreateGroup: false),
                           ),
                         ),
                       ),

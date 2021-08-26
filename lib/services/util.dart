@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:task_manager/constants/colors.dart';
 
 class Util extends ChangeNotifier {
   var _xOffset = 0.0;
   var _yOffset = 0.0;
   var _scale = 1.0;
+  var colors = [blue, orange, teal, darkGrey, Colors.indigo[300], Colors.white];
 
   void openDrawer() {
     xOffset = 250.0;

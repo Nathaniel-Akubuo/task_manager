@@ -10,6 +10,9 @@ import 'package:task_manager/widgets/rounded_button.dart';
 
 class ModalBottomSheet extends StatelessWidget {
   final controller = TextEditingController();
+  final isCreateGroup;
+
+  ModalBottomSheet({this.isCreateGroup});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,8 @@ class ModalBottomSheet extends StatelessWidget {
                           isChecked: false));
                   navigationService.back();
                 },
-                child: Text('ADD', style: kAgipo))
+                child: Text(isCreateGroup ? '+ CREATE NEW GROUP' : 'ADD',
+                    style: kAgipo))
           ],
         ),
       ),

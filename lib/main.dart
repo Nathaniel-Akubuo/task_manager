@@ -44,28 +44,30 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => Util()),
       ],
       child: MaterialApp(
-          navigatorKey: StackedService.navigatorKey,
-          onGenerateRoute: StackedRouter().onGenerateRoute,
-          theme: ThemeData(
-            scaffoldBackgroundColor: backgroundColor,
-            canvasColor: backgroundColor,
-            unselectedWidgetColor: Colors.grey,
-            checkboxTheme: CheckboxThemeData(shape: CircleBorder()),
-            appBarTheme: AppBarTheme(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-              iconTheme: IconThemeData(color: Colors.white, size: 25),
-            ),
+        navigatorKey: StackedService.navigatorKey,
+        onGenerateRoute: StackedRouter().onGenerateRoute,
+        theme: ThemeData(
+          scaffoldBackgroundColor: backgroundColor,
+          canvasColor: backgroundColor,
+          unselectedWidgetColor: darkGrey,
+          checkboxTheme: CheckboxThemeData(shape: CircleBorder()),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            iconTheme: IconThemeData(color: Colors.white, size: 25),
           ),
-          debugShowCheckedModeBanner: false,
-          initialRoute: isFirstRun == null
-              ? Routes.onBoarding
-              : isAuthenticated == null
-                  ? Routes.signUp
-                  : isAuthenticated!
-                      ? Routes.home
-                      : Routes.signIn),
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: Routes.home,
+//        initialRoute: isFirstRun == null
+//            ? Routes.onBoarding
+//            : isAuthenticated == null
+//                ? Routes.signUp
+//                : isAuthenticated!
+//                    ? Routes.home
+//                    : Routes.signIn,
+      ),
     );
   }
 }

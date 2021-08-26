@@ -6,7 +6,7 @@ import 'package:task_manager/constants/global_variables.dart';
 import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class HomeViewModel extends BaseViewModel {
-  void showBottomSheet(context) => showModalBottomSheet(
+  void showBottomSheet({isCreateGroup, context}) => showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
@@ -15,7 +15,7 @@ class HomeViewModel extends BaseViewModel {
           ),
         ),
         context: context,
-        builder: (context) => ModalBottomSheet(),
+        builder: (context) => ModalBottomSheet(isCreateGroup: isCreateGroup),
       );
 
   getUndone() {
@@ -28,11 +28,5 @@ class HomeViewModel extends BaseViewModel {
     return FirebaseFirestore.instance
         .collection('${preferences!.getString('email')}-tasks-done')
         .orderBy('dateCreated', descending: true);
-  }
-
-  count() {
-    return FirebaseFirestore.instance
-        .collection('${preferences!.getString('email')}-tasks-undone')
-        .snapshots();
   }
 }
