@@ -144,7 +144,10 @@ class HiddenDrawer extends StatelessWidget {
                   ),
                   verticalSpaceLarge,
                   RoundedButton(
-                    onTap: ()=> model.showBottomSheet(context: context, isCreateGroup: true),
+                    onTap: (){
+                      util.closeDrawer();
+                      model.showBottomSheet(context: context, isCreateGroup: true);
+                    },
                     child: Text('+ CREATE NEW GROUP', style: kPoppins),
                   ),
                   Expanded(
@@ -152,7 +155,10 @@ class HiddenDrawer extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: Container(
                         child: InkWell(
-                          onTap: () => auth.logout(context),
+                          onTap: () {
+                           auth.logout(context);
+                           util.closeDrawer();
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [

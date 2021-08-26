@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
@@ -67,19 +68,18 @@ class ProjectBubble extends StatelessWidget {
               ),
               verticalSpaceTiny,
               Text(
-                title,
+                title.toUpperCase(),
                 style: kAgipo.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    color: darkGrey),
+                    fontWeight: FontWeight.bold, fontSize: 13, color: darkGrey),
               ),
               verticalSpaceTiny,
               Expanded(
                 child: Text(
-                  firstItem!,
+                  firstItem ?? 'first item',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: kAgipo.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: kAgipo.copyWith(
+                      fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
               Container(
@@ -89,8 +89,7 @@ class ProjectBubble extends StatelessWidget {
                     color: color!.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(15)),
                 child: Text(
-                  date,
-//                  DateFormat('MMMM dd').format(DateTime.now()),
+                  DateFormat('MMMM dd').format(DateTime.parse(date)),
                   style: kAgipo.copyWith(
                     color: color,
                     fontWeight: FontWeight.bold,
@@ -100,8 +99,8 @@ class ProjectBubble extends StatelessWidget {
               )
             ],
           ),
-          decoration:
-              BoxDecoration(color: grey, borderRadius: BorderRadius.circular(15)),
+          decoration: BoxDecoration(
+              color: grey, borderRadius: BorderRadius.circular(15)),
         ),
       ),
     );

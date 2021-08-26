@@ -59,14 +59,14 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: Routes.home,
-//        initialRoute: isFirstRun == null
-//            ? Routes.onBoarding
-//            : isAuthenticated == null
-//                ? Routes.signUp
-//                : isAuthenticated!
-//                    ? Routes.home
-//                    : Routes.signIn,
+//        initialRoute: Routes.home,
+        initialRoute: isFirstRun == null
+            ? Routes.onBoarding
+            : isAuthenticated == null
+                ? Routes.signUp
+                : isAuthenticated!
+                    ? Routes.home
+                    : Routes.signIn,
       ),
     );
   }

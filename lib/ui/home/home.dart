@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
                                 verticalSpaceMedium,
                                 Text('Projects', style: kAgipo),
                                 verticalSpaceRegular,
-                                ProjectBubbleBuilder(),
+                                ProjectBubbleBuilder(model.getProjects().snapshots()),
                                 verticalSpaceMedium,
                                 Text(
                                   'Tasks',

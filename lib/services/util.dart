@@ -6,6 +6,7 @@ class Util extends ChangeNotifier {
   var _xOffset = 0.0;
   var _yOffset = 0.0;
   var _scale = 1.0;
+  var _title;
   var colors = [blue, orange, teal, darkGrey, Colors.indigo[300], Colors.white];
 
   void openDrawer() {
@@ -42,5 +43,12 @@ class Util extends ChangeNotifier {
 
   set xOffset(value) {
     _xOffset = value;
+  }
+
+  get title => _title;
+
+  set title(value) {
+    _title = value;
+    notifyListeners();
   }
 }
