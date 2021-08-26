@@ -24,6 +24,7 @@ class ProjectBubbleBuilder extends StatelessWidget {
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.data != null && snapshot.data!.size != 0) {
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 ProjectModel currentItem =

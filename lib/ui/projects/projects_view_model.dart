@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
+import 'package:task_manager/services/user_service.dart';
+import 'package:task_manager/services/util.dart';
 import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class ProjectsViewModel extends BaseViewModel {
@@ -16,5 +20,23 @@ class ProjectsViewModel extends BaseViewModel {
         builder: (context) => ModalBottomSheet(isCreateGroup: isCreateGroup),
       );
 
+  getDone(context) {
+    var userEmail = Provider.of<UserService>(context, listen: false).email;
+    var util = Provider.of<Util>(context, listen: true);
+    return FirebaseFirestore.instance
+        .collection('$userEmail-projects')
+        .doc(util.id)
+        .collection('${util.title}-done')
+        .orderBy('dateCreated', descending: true);
+  }
 
+  getUndone(context) {
+    var userEmail = Provider.of<UserService>(context, listen: false).email;
+    var util = Provider.of<Util>(context, listen: true);
+    return FirebaseFirestore.instance
+        .collection('$userEmail-projects')
+        .doc(util.id)
+        .collection('${util.title}-undone')
+        .orderBy('dateCreated');
+  }
 }

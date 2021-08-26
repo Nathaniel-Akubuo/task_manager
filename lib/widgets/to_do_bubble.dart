@@ -5,7 +5,6 @@ import 'package:task_manager/constants/styles.dart';
 
 class ToDoBubble extends StatelessWidget {
   final String title;
-  final bool isDone;
   final isChecked;
   final onChecked;
   final onDismissed;
@@ -16,8 +15,7 @@ class ToDoBubble extends StatelessWidget {
       this.isChecked = false,
       required this.onChecked,
       required this.onDismissed,
-      required this.onTap,
-      required this.isDone});
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +46,10 @@ class ToDoBubble extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(title,
-                        style: isDone
+                        style: isChecked
                             ? kTaskStyle.copyWith(
-                                decoration: TextDecoration.lineThrough, color: darkGrey)
+                                decoration: TextDecoration.lineThrough,
+                                color: darkGrey)
                             : kTaskStyle),
                   ),
                 )

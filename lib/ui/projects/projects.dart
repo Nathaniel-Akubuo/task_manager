@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
-import 'package:task_manager/constants/ui_helpers.dart';
 import 'package:task_manager/services/util.dart';
 import 'package:task_manager/ui/projects/projects_view_model.dart';
-import 'package:task_manager/widgets/project_to_do_bubble.dart';
+import 'package:task_manager/widgets/project_list_stream_builder.dart';
 
 class Projects extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _mediaQuery = MediaQuery.of(context).size;
     var util = Provider.of<Util>(context, listen: false);
     return ViewModelBuilder<ProjectsViewModel>.reactive(
         builder: (context, model, child) => Scaffold(
@@ -30,20 +30,25 @@ class Projects extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
+                      height: _mediaQuery.height * 0.5,
                       width: double.infinity,
-                      height: 400,
                       decoration: BoxDecoration(
                           color: grey, borderRadius: kBorderRadius),
-                      child: ListView(
-                        children: [
-                          verticalSpaceTiny,
-                          ProjectToDoBubble(
-                              onDismissed: (_) {},
-                              title: 'title',
-                              isChecked: true,
-                              onChecked: (_){},
-                              onTap: () {})
-                        ],
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            ProjectListStreamBuilder(
+                              stream: model.getUndone(context).snapshots(),
+                              isDoneList: false,
+                            ),
+                            ProjectListStreamBuilder(
+                              stream: model.getDone(context).snapshots(),
+                              isDoneList: true,
+                            ),
+                            Text('Add subtask')
+                          ],
+                        ),
                       ),
                     )
                   ],

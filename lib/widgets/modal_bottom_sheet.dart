@@ -49,7 +49,7 @@ class ModalBottomSheet extends StatelessWidget {
                               dateCreated: DateTime.now(),
                               color: util.colors[Random().nextInt(6)]),
                         )
-                      : task.addToDo(
+                      : projects.addToDo(
                           context: context,
                           taskModel: TaskModel(
                               dateCreated: DateTime.now(),

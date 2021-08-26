@@ -2,40 +2,40 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
-import 'package:task_manager/services/tasks_provider.dart';
-import 'package:task_manager/widgets/to_do_bubble.dart';
+import 'package:task_manager/services/projects_provider.dart';
+import 'package:task_manager/widgets/project_to_do_bubble.dart';
 
-// ignore: must_be_immutable
-class ListStreamBuilder extends StatelessWidget {
+class ProjectListStreamBuilder extends StatelessWidget {
   final stream;
   final isDoneList;
 
-  ListStreamBuilder({this.stream, this.isDoneList});
+  ProjectListStreamBuilder({this.stream, this.isDoneList});
 
   @override
   Widget build(BuildContext context) {
-    var tasks = Provider.of<TasksProvider>(context, listen: false);
+    var projects = Provider.of<ProjectsProvider>(context, listen: false);
     return StreamBuilder(
       stream: stream,
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.data != null && snapshot.data!.size != 0) {
           return ListView.builder(
-            shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              var currentItem =
+              TaskModel currentItem =
                   TaskModel.fromJson(snapshot.data!.docs[index].data());
-              return ToDoBubble(
+              return ProjectToDoBubble(
                   title: currentItem.item,
-                  onChecked: (_) => tasks.toggleDone(
-                      context: context, taskModel: currentItem),
                   isChecked: currentItem.isChecked,
                   onDismissed: (_) => isDoneList
-                      ? tasks.deleteDone(context: context, id: currentItem.id)
-                      : tasks.deleteUndone(
+                      ? projects.deleteDone(
+                          context: context, id: currentItem.id)
+                      : projects.deleteUndone(
                           context: context, id: currentItem.id),
+                  onChecked: (_) => projects.toggleDone(
+                      taskModel: currentItem, context: context),
                   onTap: () {});
             },
           );
