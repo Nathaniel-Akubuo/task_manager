@@ -50,7 +50,7 @@ class ToDoBubble extends StatelessWidget {
                     child: Text(title,
                         style: isDone
                             ? kTaskStyle.copyWith(
-                                decoration: TextDecoration.lineThrough, color: Colors.grey)
+                                decoration: TextDecoration.lineThrough, color: darkGrey)
                             : kTaskStyle),
                   ),
                 )

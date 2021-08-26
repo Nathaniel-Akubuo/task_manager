@@ -34,6 +34,6 @@ class HomeViewModel extends BaseViewModel {
   getProjects(){
     return FirebaseFirestore.instance
         .collection('${preferences!.getString('email')}-projects')
-        .orderBy('dateCreated');
+        .orderBy('dateCreated', descending: true);
   }
 }

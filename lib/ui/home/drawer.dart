@@ -31,7 +31,7 @@ class HiddenDrawer extends StatelessWidget {
                     height: 80,
                     width: double.infinity,
                     decoration:
-                        BoxDecoration(color: grey, borderRadius: borderRadius),
+                        BoxDecoration(color: grey, borderRadius: kBorderRadius),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -70,7 +70,7 @@ class HiddenDrawer extends StatelessWidget {
                     height: 80,
                     width: double.infinity,
                     decoration:
-                        BoxDecoration(color: grey, borderRadius: borderRadius),
+                        BoxDecoration(color: grey, borderRadius: kBorderRadius),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -109,7 +109,7 @@ class HiddenDrawer extends StatelessWidget {
                     height: 80,
                     width: double.infinity,
                     decoration:
-                        BoxDecoration(color: grey, borderRadius: borderRadius),
+                        BoxDecoration(color: grey, borderRadius: kBorderRadius),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [

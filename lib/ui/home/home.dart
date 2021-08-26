@@ -84,10 +84,10 @@ class _HomeState extends State<Home> {
                                   style: kAgipo,
                                 ),
                                 verticalSpaceRegular,
-                                UndoneListBuilder(
+                                ListStreamBuilder(
                                     stream: model.getUndone().snapshots(),
                                     isDoneList: false),
-                                Divider(color: Colors.grey),
+                                Divider(color: darkGrey),
                                 verticalSpaceSmall,
                                 Theme(
                                   data: Theme.of(context).copyWith(
@@ -137,7 +137,7 @@ class _HomeState extends State<Home> {
                                             color: Colors.grey,
                                           ),
                                     children: [
-                                      UndoneListBuilder(
+                                      ListStreamBuilder(
                                           stream: model.getDone().snapshots(),
                                           isDoneList: true),
                                     ],

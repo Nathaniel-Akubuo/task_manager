@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 const kPadding = EdgeInsets.symmetric(horizontal: 20);
 
-const borderRadius = BorderRadius.all(Radius.circular(15));
+const kBorderRadius = BorderRadius.all(Radius.circular(15));
 const kTaskStyle =
-    TextStyle(fontSize: 18, fontFamily: 'Agipo', color: Colors.white);
+    TextStyle(fontSize: 18, fontFamily: 'Agipo', color: Colors.white, fontWeight: FontWeight.w100);
 
 const kPoppins = TextStyle(
     fontWeight: FontWeight.bold,

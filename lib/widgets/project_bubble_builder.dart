@@ -31,6 +31,7 @@ class ProjectBubbleBuilder extends StatelessWidget {
                 return ProjectBubble(
                     onTap: () {
                       util.title = currentItem.title;
+                      util.id = currentItem.id;
                       return navigationService.navigateTo(Routes.projects);
                     },
                     percentage: 10,
