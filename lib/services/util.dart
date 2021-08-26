@@ -8,6 +8,7 @@ class Util extends ChangeNotifier {
   var _scale = 1.0;
   var _title;
   var _id;
+  var _color;
   var colors = [blue, orange, teal, darkGrey, Colors.indigo[300], Colors.white];
 
   void openDrawer() {
@@ -57,6 +58,13 @@ class Util extends ChangeNotifier {
 
   set id(value) {
     _id = value;
+    notifyListeners();
+  }
+
+  get color => _color;
+
+  set color(value) {
+    _color = value;
     notifyListeners();
   }
 }

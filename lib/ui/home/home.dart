@@ -153,7 +153,7 @@ class _HomeState extends State<Home> {
                           floatingActionButton: FloatingActionButton(
                             child: Icon(Icons.add, size: 30),
                             backgroundColor: blue,
-                            onPressed: () => model.showBottomSheet(context: context, isCreateGroup: false),
+                            onPressed: () => model.showBottomSheet(context: context, action: 'addHomeTask'),
                           ),
                         ),
                       ),

@@ -15,22 +15,22 @@ import 'package:task_manager/widgets/rounded_button.dart';
 
 class ModalBottomSheet extends StatelessWidget {
   final controller = TextEditingController();
-  final isCreateGroup;
+  final String? action;
 
-  ModalBottomSheet({this.isCreateGroup});
+  ModalBottomSheet({this.action});
 
   @override
   Widget build(BuildContext context) {
     var task = Provider.of<TasksProvider>(context, listen: false);
     var projects = Provider.of<ProjectsProvider>(context, listen: false);
     var util = Provider.of<Util>(context, listen: false);
-    final _mediaQuery = MediaQuery.of(context).size;
+    final _mediaQuery = MediaQuery.of(context);
     return Padding(
       padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom * 0.8),
+          bottom: _mediaQuery.viewInsets.bottom * 0.8),
       child: Container(
         padding: kPadding,
-        height: _mediaQuery.height * 0.4,
+        height: _mediaQuery.size.height * 0.4,
         child: Column(
           children: [
             verticalSpaceLarge,
@@ -41,24 +41,34 @@ class ModalBottomSheet extends StatelessWidget {
             verticalSpaceLarge,
             RoundedButton(
                 onTap: () {
-                  isCreateGroup
-                      ? projects.createProject(
-                    context: context,
-                          projectModel: ProjectModel(
-                              title: controller.text,
-                              dateCreated: DateTime.now(),
-                              color: util.colors[Random().nextInt(6)]),
-                        )
-                      : projects.addToDo(
-                          context: context,
-                          taskModel: TaskModel(
-                              dateCreated: DateTime.now(),
-                              item: controller.text,
-                              isChecked: false),
-                        );
+                  if (action == 'createGroup') {
+                    projects.createProject(
+                      context: context,
+                      projectModel: ProjectModel(
+                          title: controller.text,
+                          dateCreated: DateTime.now(),
+                          color: util.colors[Random().nextInt(6)]),
+                    );
+                  } else if (action == 'createGroupTask') {
+                    projects.addToDo(
+                      context: context,
+                      taskModel: TaskModel(
+                          dateCreated: DateTime.now(),
+                          item: controller.text,
+                          isChecked: false),
+                    );
+                  } else if (action == 'addHomeTask') {
+                    task.addToDo(
+                        context: context,
+                        taskModel: TaskModel(
+                            dateCreated: DateTime.now(),
+                            item: controller.text,
+                            isChecked: false));
+                  }
                   navigationService.back();
                 },
-                child: Text(isCreateGroup ? '+ CREATE NEW GROUP' : 'ADD',
+                child: Text(
+                    action == 'createGroup' ? '+ CREATE NEW GROUP' : 'ADD',
                     style: kAgipo))
           ],
         ),

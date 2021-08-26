@@ -146,7 +146,7 @@ class HiddenDrawer extends StatelessWidget {
                   RoundedButton(
                     onTap: (){
                       util.closeDrawer();
-                      model.showBottomSheet(context: context, isCreateGroup: true);
+                      model.showBottomSheet(context: context, action: 'createGroup');
                     },
                     child: Text('+ CREATE NEW GROUP', style: kPoppins),
                   ),

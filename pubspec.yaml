@@ -37,6 +37,7 @@ dependencies:
   stacked_services: ^0.8.12
   syncfusion_flutter_charts: ^19.2.56
   syncfusion_flutter_gauges: ^19.2.57
+  flutter_reorderable_list: ^1.0.0
 
 
 dev_dependencies:

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ReorderableList;
 import 'package:provider/provider.dart';
 import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/services/projects_provider.dart';

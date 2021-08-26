@@ -44,7 +44,7 @@ class ProjectToDoBubble extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(bottom: 5, left: 10, right: 10),
+                        const EdgeInsets.only(bottom: 5, left: 5, right: 5),
                     child: Text(title,
                         style: isChecked
                             ? kTaskStyle.copyWith(
@@ -56,7 +56,7 @@ class ProjectToDoBubble extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 60),
+              padding: const EdgeInsets.only(left: 55, right: 10),
               child: Divider(
                 color: darkGrey,
               ),

@@ -7,7 +7,7 @@ import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class HomeViewModel extends BaseViewModel {
 
-  void showBottomSheet({isCreateGroup, context}) => showModalBottomSheet(
+  void showBottomSheet({action, context}) => showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
@@ -16,7 +16,7 @@ class HomeViewModel extends BaseViewModel {
           ),
         ),
         context: context,
-        builder: (context) => ModalBottomSheet(isCreateGroup: isCreateGroup),
+        builder: (context) => ModalBottomSheet(action: action),
       );
 
   getUndone() {
