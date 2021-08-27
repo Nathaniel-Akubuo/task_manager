@@ -50,13 +50,21 @@ class Projects extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               ProjectCompletionGauge(
-                                doneStream:
-                                    model.getDone(context).snapshots(),
+                                doneStream: model.getDone(context).snapshots(),
                                 undoneStream:
                                     model.getUndone(context).snapshots(),
                                 color: util.color,
                               ),
-                              Icon(Icons.edit, color: darkGrey)
+                              Container(
+                                height: 30,
+                                width: 30,
+                                child: IconButton(
+                                  onPressed: () {},
+                                  color: darkGrey,
+                                  splashColor: grey,
+                                  icon: Icon(Icons.edit),
+                                ),
+                              )
                             ],
                           ),
                           Text(
@@ -85,7 +93,9 @@ class Projects extends StatelessWidget {
                     ),
                     verticalSpaceLarge,
                     Container(
-                      height: _mediaQuery.size.height * 0.515,
+                      constraints: BoxConstraints(
+                          minHeight: _mediaQuery.size.height * 0.2,
+                          maxHeight: _mediaQuery.size.height * 0.515),
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: grey, borderRadius: kBorderRadius),

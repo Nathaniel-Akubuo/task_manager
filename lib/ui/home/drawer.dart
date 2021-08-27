@@ -5,6 +5,7 @@ import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
 import 'package:task_manager/services/authentication.dart';
 import 'package:task_manager/services/util.dart';
+import 'package:task_manager/widgets/project_drawer_bubble.dart';
 import 'package:task_manager/widgets/rounded_button.dart';
 
 import 'package:stacked/stacked.dart';
@@ -104,49 +105,17 @@ class HiddenDrawer extends StatelessWidget {
                     ),
                   ),
                   verticalSpaceRegular,
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    height: 80,
-                    width: double.infinity,
-                    decoration:
-                        BoxDecoration(color: grey, borderRadius: kBorderRadius),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 7.5,
-                          decoration: BoxDecoration(
-                            color: teal,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(15),
-                              bottom: Radius.circular(15),
-                            ),
-                          ),
-                        ),
-                        horizontalSpaceRegular,
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Trip',
-                              style: kAgipo,
-                            ),
-                            Text(
-                              '4 tasks',
-                              style: kAgipo.copyWith(
-                                  fontSize: 15, color: Colors.grey),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                  ProjectDrawerBubble(
+                    color: util.colors[4],
+                    title: 'Trip',
+                    count: 15,
                   ),
                   verticalSpaceLarge,
                   RoundedButton(
-                    onTap: (){
+                    onTap: () {
                       util.closeDrawer();
-                      model.showBottomSheet(context: context, action: 'createGroup');
+                      model.showBottomSheet(
+                          context: context, action: 'createGroup');
                     },
                     child: Text('+ CREATE NEW GROUP', style: kPoppins),
                   ),
@@ -155,10 +124,11 @@ class HiddenDrawer extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       child: Container(
                         child: InkWell(
-                          onTap: () {
-                           auth.logout(context);
-                           util.closeDrawer();
-                          },
+                          splashColor: darkGrey,
+                          borderRadius: BorderRadius.circular(10),
+                          onTap: () => auth
+                              .logout(context)
+                              .then((value) => util.closeDrawer()),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [

@@ -27,7 +27,7 @@ class ModalBottomSheet extends StatelessWidget {
     final _mediaQuery = MediaQuery.of(context);
     return Padding(
       padding: EdgeInsets.only(
-          bottom: _mediaQuery.viewInsets.bottom * 0.8),
+          bottom: _mediaQuery.viewInsets.bottom * 0.7),
       child: Container(
         padding: kPadding,
         height: _mediaQuery.size.height * 0.4,
@@ -47,7 +47,7 @@ class ModalBottomSheet extends StatelessWidget {
                       projectModel: ProjectModel(
                           title: controller.text,
                           dateCreated: DateTime.now(),
-                          color: util.colors[Random().nextInt(6)]),
+                          color: util.colors[Random().nextInt(util.colors.length)]),
                     );
                   } else if (action == 'createGroupTask') {
                     projects.addToDo(

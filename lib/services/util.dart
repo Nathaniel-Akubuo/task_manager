@@ -9,7 +9,7 @@ class Util extends ChangeNotifier {
   var _title;
   var _id;
   var _color;
-  var colors = [blue, orange, teal, darkGrey, Colors.indigo[300], Colors.white];
+  var colors = [blue, orange, teal, Colors.indigo[300], Colors.white];
 
   void openDrawer() {
     xOffset = 250.0;

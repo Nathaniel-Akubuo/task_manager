@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
@@ -47,6 +48,7 @@ class _HomeState extends State<Home> {
                               : backgroundColor,
                           appBar: AppBar(
                             leading: IconButton(
+                                splashColor: grey,
                                 icon: Icon(
                                   Icons.menu,
                                   color: Colors.white,
@@ -55,7 +57,7 @@ class _HomeState extends State<Home> {
                                     ? util.closeDrawer
                                     : util.openDrawer),
                             title: Text(
-                              'Monday, 28',
+                              DateFormat('EEEE d').format(DateTime.now()),
                               style: kAgipo,
                             ),
                             actions: [
@@ -73,11 +75,14 @@ class _HomeState extends State<Home> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 verticalSpaceMedium,
-                                ProgressBubble(),
+                                ProgressBubble(
+                                  stream: model.getProjects().snapshots(),
+                                ),
                                 verticalSpaceMedium,
                                 Text('Projects', style: kAgipo),
                                 verticalSpaceRegular,
-                                ProjectBubbleBuilder(model.getProjects().snapshots()),
+                                ProjectBubbleBuilder(
+                                    model.getProjects().snapshots()),
                                 verticalSpaceMedium,
                                 Text(
                                   'Tasks',
@@ -153,7 +158,8 @@ class _HomeState extends State<Home> {
                           floatingActionButton: FloatingActionButton(
                             child: Icon(Icons.add, size: 30),
                             backgroundColor: blue,
-                            onPressed: () => model.showBottomSheet(context: context, action: 'addHomeTask'),
+                            onPressed: () => model.showBottomSheet(
+                                context: context, action: 'addHomeTask'),
                           ),
                         ),
                       ),
