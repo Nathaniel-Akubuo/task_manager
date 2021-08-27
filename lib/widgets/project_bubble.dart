@@ -75,7 +75,7 @@ class ProjectBubble extends StatelessWidget {
               verticalSpaceTiny,
               Expanded(
                 child: Text(
-                  firstItem ?? 'first item',
+                  firstItem ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: kAgipo.copyWith(

@@ -62,7 +62,8 @@ class ProgressBubble extends StatelessWidget {
                           dataSource: projects,
                           radius: '${_mediaQuery.width * 0.2}',
                           xValueMapper: (ProjectModel item, _) => item.title,
-                          yValueMapper: (ProjectModel item, _) => item.count,
+                          yValueMapper: (ProjectModel item, _) =>
+                              item.count ?? 0,
                           pointColorMapper: (ProjectModel item, _) =>
                               item.color,
                           maximumValue: 100)
@@ -111,7 +112,7 @@ class ProgressBubble extends StatelessWidget {
                               context: context,
                               color: e['color'],
                               title: e['title'],
-                              count: e['count']))
+                              count: e['count'] ?? 0))
                           .toList(),
                     );
                   } else
