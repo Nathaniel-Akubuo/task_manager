@@ -36,7 +36,7 @@ class ProjectBubbleBuilder extends StatelessWidget {
                       util.color = currentItem.color;
                       return navigationService.navigateTo(Routes.projects);
                     },
-                    percentage: 10,
+                    percentage: currentItem.count,
                     title: currentItem.title,
                     color: currentItem.color,
                     date: currentItem.dateCreated.toString());

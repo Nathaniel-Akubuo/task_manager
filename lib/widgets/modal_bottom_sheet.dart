@@ -26,8 +26,7 @@ class ModalBottomSheet extends StatelessWidget {
     var util = Provider.of<Util>(context, listen: false);
     final _mediaQuery = MediaQuery.of(context);
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: _mediaQuery.viewInsets.bottom * 0.7),
+      padding: EdgeInsets.only(bottom: _mediaQuery.viewInsets.bottom * 0.7),
       child: Container(
         padding: kPadding,
         height: _mediaQuery.size.height * 0.4,
@@ -47,7 +46,8 @@ class ModalBottomSheet extends StatelessWidget {
                       projectModel: ProjectModel(
                           title: controller.text,
                           dateCreated: DateTime.now(),
-                          color: util.colors[Random().nextInt(util.colors.length)]),
+                          color: util
+                              .colors[Random().nextInt(util.colors.length)]),
                     );
                   } else if (action == 'createGroupTask') {
                     projects.addToDo(
@@ -64,6 +64,9 @@ class ModalBottomSheet extends StatelessWidget {
                             dateCreated: DateTime.now(),
                             item: controller.text,
                             isChecked: false));
+                  } else if (action == 'editGroupTask') {
+                    projects.updateUndoneTask(
+                        id: util.id, context: context, text: controller.text);
                   }
                   navigationService.back();
                 },

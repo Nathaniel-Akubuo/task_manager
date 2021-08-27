@@ -5,6 +5,7 @@ class ProjectModel {
   String? id;
   DateTime dateCreated;
   String? firstItem;
+  double? count;
   Color? color;
 
   ProjectModel(
@@ -12,12 +13,15 @@ class ProjectModel {
       this.id,
       required this.dateCreated,
       this.firstItem,
+      this.count,
       required this.color});
 
   static ProjectModel fromJson(Map<String, dynamic> data) => ProjectModel(
         id: data['id'],
         title: data['title'],
         color: Color(data['color']),
+        count: data['count'],
+        firstItem: data['firstItem'],
         dateCreated: DateTime.parse(
           data['dateCreated'],
         ),
@@ -28,6 +32,7 @@ class ProjectModel {
         'id': id,
         'title': title,
         'firstItem': firstItem,
-        'color': color!.value
+        'color': color!.value,
+        'count': count
       };
 }

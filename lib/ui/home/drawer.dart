@@ -106,7 +106,7 @@ class HiddenDrawer extends StatelessWidget {
                   ),
                   verticalSpaceRegular,
                   ProjectDrawerBubble(
-                    color: util.colors[4],
+                    color: util.colors[2],
                     title: 'Trip',
                     count: 15,
                   ),

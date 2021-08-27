@@ -41,14 +41,14 @@ class ProgressBubble extends StatelessWidget {
               stream: stream,
               builder: (context,
                   AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-                if (snapshot.data!.size > 0) {
+                if (snapshot.data != null && snapshot.data!.size > 0) {
                   List<ProjectModel> projects = [];
-                  var data = snapshot.data!.docs;
+                  var list = snapshot.data!.docs;
 
-                  data.length > 2
-                      ? data.removeRange(3, data.length)
-                      : data.remove(null);
-                  data.forEach((element) =>
+                  list.length > 2
+                      ? list.removeRange(3, list.length)
+                      : list.remove(null);
+                  list.forEach((element) =>
                       projects.add(ProjectModel.fromJson(element.data())));
                   return SfCircularChart(
                     series: <CircularSeries>[
@@ -62,7 +62,7 @@ class ProgressBubble extends StatelessWidget {
                           dataSource: projects,
                           radius: '${_mediaQuery.width * 0.2}',
                           xValueMapper: (ProjectModel item, _) => item.title,
-                          yValueMapper: (ProjectModel item, _) => 80,
+                          yValueMapper: (ProjectModel item, _) => item.count,
                           pointColorMapper: (ProjectModel item, _) =>
                               item.color,
                           maximumValue: 100)
@@ -101,9 +101,9 @@ class ProgressBubble extends StatelessWidget {
                         snapshot) {
                   if (snapshot.hasData) {
                     var list = snapshot.data!.docs;
-                    data.length > 2
+                    list.length > 2
                         ? list.removeRange(3, list.length)
-                        : data.remove(null);
+                        : list.remove(null);
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: list

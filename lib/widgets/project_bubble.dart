@@ -6,7 +6,7 @@ import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
 
 class ProjectBubble extends StatelessWidget {
-  final double percentage;
+  final double? percentage;
   final String title;
   final Color? color;
   final String? firstItem;
@@ -56,7 +56,7 @@ class ProjectBubble extends StatelessWidget {
                       pointers: <GaugePointer>[
                         RangePointer(
                           color: color,
-                          value: percentage,
+                          value: percentage ?? 0,
                           width: 0.75,
                           pointerOffset: 0.25,
                           sizeUnit: GaugeSizeUnit.factor,
