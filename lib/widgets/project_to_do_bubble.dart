@@ -28,17 +28,14 @@ class ProjectToDoBubble extends StatelessWidget {
           children: [
             Row(
               children: [
-                Theme(
-                  data: Theme.of(context).copyWith(unselectedWidgetColor: blue),
-                  child: Transform.scale(
-                    scale: 1.3,
-                    child: Checkbox(
-                      shape: CircleBorder(),
-                      checkColor: backgroundColor,
-                      activeColor: darkGrey,
-                      value: isChecked,
-                      onChanged: onChecked,
-                    ),
+                Transform.scale(
+                  scale: 1.3,
+                  child: Checkbox(
+                    shape: CircleBorder(),
+                    checkColor: backgroundColor,
+                    activeColor: darkGrey,
+                    value: isChecked,
+                    onChanged: onChecked,
                   ),
                 ),
                 Expanded(

@@ -3,12 +3,12 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:task_manager/constants/colors.dart';
 import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
 import 'package:task_manager/services/util.dart';
 import 'package:task_manager/ui/projects/projects_view_model.dart';
+import 'package:task_manager/widgets/project_completion_gauge.dart';
 import 'package:task_manager/widgets/project_list_stream_builder.dart';
 
 class Projects extends StatelessWidget {
@@ -38,7 +38,7 @@ class Projects extends StatelessWidget {
                     verticalSpaceRegular,
                     Container(
                       padding: EdgeInsets.all(10),
-                      height: _mediaQuery.size.height * 0.175,
+                      height: _mediaQuery.size.height * 0.16,
                       width: _mediaQuery.size.width,
                       decoration: BoxDecoration(
                           color: grey, borderRadius: kBorderRadius),
@@ -49,37 +49,14 @@ class Projects extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                height: _mediaQuery.size.height * 0.04,
-                                width: _mediaQuery.size.width*0.09,
-                                child: SfRadialGauge(
-                                  axes: <RadialAxis>[
-                                    RadialAxis(
-                                      minimum: 0,
-                                      maximum: 100,
-                                      showLabels: false,
-                                      showTicks: false,
-                                      startAngle: 270,
-                                      endAngle: 270,
-                                      axisLineStyle: AxisLineStyle(
-                                        thickness: 0.05,
-                                        color: util.color,
-                                        thicknessUnit: GaugeSizeUnit.factor,
-                                      ),
-                                      pointers: <GaugePointer>[
-                                        RangePointer(
-                                          color: util.color,
-                                          value: 80,
-                                          width: 0.75,
-                                          pointerOffset: 0.25,
-                                          sizeUnit: GaugeSizeUnit.factor,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
+                              ProjectCompletionGauge(
+                                doneStream:
+                                    model.getDone(context).snapshots(),
+                                undoneStream:
+                                    model.getUndone(context).snapshots(),
+                                color: util.color,
                               ),
-                              Icon(Icons.edit, color: darkGrey,)
+                              Icon(Icons.edit, color: darkGrey)
                             ],
                           ),
                           Text(
@@ -108,7 +85,7 @@ class Projects extends StatelessWidget {
                     ),
                     verticalSpaceLarge,
                     Container(
-                      height: _mediaQuery.size.height * 0.5,
+                      height: _mediaQuery.size.height * 0.515,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: grey, borderRadius: kBorderRadius),
