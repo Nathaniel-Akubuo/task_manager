@@ -20,9 +20,10 @@ class ProjectsProvider extends ChangeNotifier {
     var util = Provider.of<Util>(context, listen: false);
     var projects = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id);
+        .doc(util.id)
+        .collection('${util.title}-undone');
 
-    var doc = projects.collection('${util.title}-undone').doc();
+    var doc = projects.doc();
     taskModel.id = doc.id;
     doc.set(taskModel.toJson());
     updateCountAndFirstItem(context);

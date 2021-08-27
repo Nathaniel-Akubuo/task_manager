@@ -111,7 +111,7 @@ class ProgressBubble extends StatelessWidget {
                               context: context,
                               color: e['color'],
                               title: e['title'],
-                              count: '10'))
+                              count: e['count']))
                           .toList(),
                     );
                   } else
@@ -151,7 +151,7 @@ class ProgressBubble extends StatelessWidget {
           ),
         ),
         Text(
-          '$count%',
+          '${count.toStringAsFixed(0)}%',
           style: kAgipo.copyWith(
               fontWeight: FontWeight.bold, fontSize: 13, color: darkGrey),
         )
