@@ -31,9 +31,9 @@ class ProjectListStreamBuilder extends StatelessWidget {
                   isChecked: currentItem.isChecked,
                   onDismissed: (_) => isDoneList
                       ? projects.deleteDone(
-                          context: context, id: currentItem.id)
+                          context: context, docID: currentItem.id)
                       : projects.deleteUndone(
-                          context: context, id: currentItem.id),
+                          context: context, docID: currentItem.id),
                   onChecked: (_) => projects.toggleDone(
                       taskModel: currentItem, context: context),
                   onTap: () {});

@@ -8,6 +8,7 @@ class Util extends ChangeNotifier {
   var _scale = 1.0;
   var _title;
   var _id;
+  var _docID;
   var _color;
   var colors = [blue, orange, teal];
 
@@ -65,6 +66,13 @@ class Util extends ChangeNotifier {
 
   set color(value) {
     _color = value;
+    notifyListeners();
+  }
+
+  get docID => _docID;
+
+  set docID(value) {
+    _docID = value;
     notifyListeners();
   }
 }

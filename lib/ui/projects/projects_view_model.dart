@@ -22,21 +22,21 @@ class ProjectsViewModel extends BaseViewModel {
 
   getDone(context) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: true);
+    var id = Provider.of<Util>(context, listen: true).id;
     return FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-done')
+        .doc(id)
+        .collection('$id-done')
         .orderBy('dateCreated', descending: true);
   }
 
   getUndone(context) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: true);
+    var id = Provider.of<Util>(context, listen: true).id;
     return FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-undone')
+        .doc(id)
+        .collection('$id-undone')
         .orderBy('dateCreated');
   }
 }

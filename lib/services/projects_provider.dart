@@ -17,11 +17,11 @@ class ProjectsProvider extends ChangeNotifier {
 
   void addToDo({context, required TaskModel taskModel}) async {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
     var projects = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-undone');
+        .doc(id)
+        .collection('$id-undone');
 
     var doc = projects.doc();
     taskModel.id = doc.id;
@@ -31,48 +31,48 @@ class ProjectsProvider extends ChangeNotifier {
 
   void toggleDone({context, required TaskModel taskModel}) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
 
     var projectUndone = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-undone');
+        .doc(id)
+        .collection('$id-undone');
     var projectDone = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-done');
+        .doc(id)
+        .collection('$id-done');
     if (taskModel.isChecked) {
       taskModel.isChecked = false;
-      deleteDone(id: taskModel.id, context: context);
+      deleteDone(docID: taskModel.id, context: context);
       projectUndone.doc(taskModel.id).set(taskModel.toJson());
     } else if (!taskModel.isChecked) {
-      deleteUndone(id: taskModel.id, context: context);
+      deleteUndone(docID: taskModel.id, context: context);
       taskModel.isChecked = true;
       projectDone.doc(taskModel.id).set(taskModel.toJson());
     }
     updateCountAndFirstItem(context);
   }
 
-  void deleteUndone({context, id}) {
-    var util = Provider.of<Util>(context, listen: false);
+  void deleteUndone({context, docID}) {
+    var id = Provider.of<Util>(context, listen: false).id;
     var userEmail = Provider.of<UserService>(context, listen: false).email;
     var projectUndone = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-undone');
-    projectUndone.doc(id).delete();
+        .doc(id)
+        .collection('$id-undone');
+    projectUndone.doc(docID).delete();
     updateCountAndFirstItem(context);
   }
 
   void updateCountAndFirstItem(context) async {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
     var projects = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id);
+        .doc(id);
 
-    var undone = projects.collection('${util.title}-undone');
-    var done = projects.collection('${util.title}-done');
+    var undone = projects.collection('$id-undone').orderBy('dateCreated');
+    var done = projects.collection('$id-done');
 
     QuerySnapshot doneItems = await done.get();
     QuerySnapshot undoneItems = await undone.get();
@@ -84,49 +84,49 @@ class ProjectsProvider extends ChangeNotifier {
     projects.update({'firstItem': firstItem, 'count': percentage});
   }
 
-  void deleteDone({context, id}) {
+  void deleteDone({context, docID}) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
     var projectDone = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-done');
-    projectDone.doc(id).delete();
+        .doc(id)
+        .collection('$id-done');
+    projectDone.doc(docID).delete();
     updateCountAndFirstItem(context);
   }
 
-  void updateProjectTitle({context, id, text}) {
+  void updateProjectTitle({context, text}) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
     var project = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id);
+        .doc(id);
 
     project.update({'title': text});
   }
 
-  void updateDoneTask({id, context, text}) {
+  void updateDoneTask({docID, context, text}) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
 
     var projectDone = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-done')
-        .doc(id);
+        .doc(id)
+        .collection('$id-done')
+        .doc(docID);
 
     projectDone.update({'item': text});
   }
 
-  void updateUndoneTask({id, context, text}) {
+  void updateUndoneTask({docID, context, text}) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
-    var util = Provider.of<Util>(context, listen: false);
+    var id = Provider.of<Util>(context, listen: false).id;
 
     var projectUndone = FirebaseFirestore.instance
         .collection('$userEmail-projects')
-        .doc(util.id)
-        .collection('${util.title}-undone')
-        .doc(id);
+        .doc(id)
+        .collection('$id-undone')
+        .doc(docID);
 
     projectUndone.update({'item': text});
   }

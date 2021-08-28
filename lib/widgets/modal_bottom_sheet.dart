@@ -65,13 +65,20 @@ class ModalBottomSheet extends StatelessWidget {
                             item: controller.text,
                             isChecked: false));
                   } else if (action == 'editGroupTask') {
-                    projects.updateUndoneTask(
-                        id: util.id, context: context, text: controller.text);
+                    projects.updateUndoneTask(context: context, text: controller.text);
+                  } else if (action == 'editProjectName') {
+                    projects.updateProjectTitle(
+                        context: context, text: controller.text);
+                    util.title = controller.text;
                   }
                   navigationService.back();
                 },
                 child: Text(
-                    action == 'createGroup' ? '+ CREATE NEW GROUP' : 'ADD',
+                    action == 'createGroup'
+                        ? '+ CREATE NEW GROUP'
+                        : action == 'editProjectName'
+                            ? 'SAVE'
+                            : 'ADD',
                     style: kAgipo))
           ],
         ),
