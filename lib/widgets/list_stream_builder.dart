@@ -5,7 +5,6 @@ import 'package:task_manager/models/task_model.dart';
 import 'package:task_manager/services/tasks_provider.dart';
 import 'package:task_manager/widgets/to_do_bubble.dart';
 
-// ignore: must_be_immutable
 class ListStreamBuilder extends StatelessWidget {
   final stream;
   final isDoneList;

@@ -13,40 +13,44 @@ class ProjectDrawerBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      height: 80,
-      width: double.infinity,
-      decoration: BoxDecoration(color: grey, borderRadius: kBorderRadius),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            width: 7.5,
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(15),
-                bottom: Radius.circular(15),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        height: 80,
+        width: double.infinity,
+        decoration: BoxDecoration(color: grey, borderRadius: kBorderRadius),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 7.5,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(15),
+                  bottom: Radius.circular(15),
+                ),
               ),
             ),
-          ),
-          horizontalSpaceRegular,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: kAgipo,
-              ),
-              Text(
-                '$count task(s)',
-                style: kAgipo.copyWith(fontSize: 15, color: Colors.grey),
-              )
-            ],
-          )
-        ],
+            horizontalSpaceRegular,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: kAgipo,
+                ),
+                Text(
+                  '${count.toStringAsFixed(0)} task(s)',
+                  style: kAgipo.copyWith(fontSize: 15, color: Colors.grey),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

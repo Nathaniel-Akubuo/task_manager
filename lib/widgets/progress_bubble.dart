@@ -101,18 +101,19 @@ class ProgressBubble extends StatelessWidget {
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
                   if (snapshot.hasData) {
-                    var list = snapshot.data!.docs;
-                    list.length > 2
-                        ? list.removeRange(3, list.length)
-                        : list.remove(null);
+                    List<ProjectModel> list = [];
+                    snapshot.data!.docs.forEach((element) {
+                      list.add(ProjectModel.fromJson(element.data()));
+                    });
+                    list.removeRange(3, list.length);
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: list
-                          .map((e) => buildColoredDots(
+                          .map((currentItem) => buildColoredDots(
                               context: context,
-                              color: e['color'],
-                              title: e['title'],
-                              count: e['count'] ?? 0))
+                              color: currentItem.color,
+                              title: currentItem.title,
+                              count: currentItem.count ?? 0))
                           .toList(),
                     );
                   } else
@@ -140,7 +141,7 @@ class ProgressBubble extends StatelessWidget {
                 height: 8,
                 width: 8,
                 decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Color(color)),
+                    BoxDecoration(shape: BoxShape.circle, color: color),
               ),
               horizontalSpaceTiny,
               Text(

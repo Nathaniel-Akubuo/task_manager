@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager/app/app.router.dart';
 import 'package:task_manager/constants/colors.dart';
+import 'package:task_manager/constants/global_variables.dart';
 import 'package:task_manager/constants/styles.dart';
 import 'package:task_manager/constants/ui_helpers.dart';
+import 'package:task_manager/models/project_model.dart';
 import 'package:task_manager/services/authentication.dart';
 import 'package:task_manager/services/util.dart';
 import 'package:task_manager/widgets/project_drawer_bubble.dart';
@@ -24,103 +29,55 @@ class HiddenDrawer extends StatelessWidget {
             body: Container(
               padding: EdgeInsets.all(15),
               width: util.xOffset,
-              child: Column(
-                children: [
-                  verticalSpaceRegular,
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    height: 80,
-                    width: double.infinity,
-                    decoration:
-                        BoxDecoration(color: grey, borderRadius: kBorderRadius),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 7.5,
-                          decoration: BoxDecoration(
-                            color: blue,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(15),
-                              bottom: Radius.circular(15),
-                            ),
-                          ),
-                        ),
-                        horizontalSpaceRegular,
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Inbox',
-                              style: kAgipo,
-                            ),
-                            Text(
-                              '16 tasks',
-                              style: kAgipo.copyWith(
-                                  fontSize: 15, color: Colors.grey),
-                            )
-                          ],
-                        )
-                      ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    verticalSpaceRegular,
+                    StreamBuilder(
+                        stream: model.getProjects().snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.data != null && snapshot.data!.size != 0) {
+                            List<ProjectModel> list = [];
+                            snapshot.data!.docs.forEach((element) {
+                              list.add(ProjectModel.fromJson(element.data()));
+                            });
+                            list.removeRange(3, list.length);
+                            return Column(
+                              children: list
+                                  .map((currentItem) => ProjectDrawerBubble(
+                                        title: currentItem.title,
+                                        count: currentItem.count ?? 0,
+                                        color: currentItem.color,
+                                        onTap: () {
+                                          util.title = currentItem.title;
+                                          util.id = currentItem.id;
+                                          util.color = currentItem.color;
+                                          util.closeDrawer();
+                                          return navigationService
+                                              .navigateTo(Routes.projects);
+                                        },
+                                      ))
+                                  .toList(),
+                            );
+                          } else
+                            return Container();
+                        }),
+                    verticalSpaceLarge,
+                    RoundedButton(
+                      onTap: () {
+                        util.closeDrawer();
+                        model.showBottomSheet(
+                            context: context, action: 'createGroup');
+                      },
+                      child: Text('+ CREATE NEW GROUP', style: kPoppins),
                     ),
-                  ),
-                  verticalSpaceRegular,
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: 80,
-                    width: double.infinity,
-                    decoration:
-                        BoxDecoration(color: grey, borderRadius: kBorderRadius),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 7.5,
-                          decoration: BoxDecoration(
-                            color: orange,
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(15),
-                              bottom: Radius.circular(15),
-                            ),
-                          ),
-                        ),
-                        horizontalSpaceRegular,
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Meeting',
-                              style: kAgipo,
-                            ),
-                            Text(
-                              '8 tasks',
-                              style: kAgipo.copyWith(
-                                  fontSize: 15, color: Colors.grey),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  verticalSpaceRegular,
-                  ProjectDrawerBubble(
-                    color: util.colors[2],
-                    title: 'Trip',
-                    count: 15,
-                  ),
-                  verticalSpaceLarge,
-                  RoundedButton(
-                    onTap: () {
-                      util.closeDrawer();
-                      model.showBottomSheet(
-                          context: context, action: 'createGroup');
-                    },
-                    child: Text('+ CREATE NEW GROUP', style: kPoppins),
-                  ),
-                  Expanded(
-                    child: Align(
+                    verticalSpaceLarge,
+                    verticalSpaceLarge,
+                    verticalSpaceLarge,
+                    verticalSpaceLarge,
+                    Align(
                       alignment: Alignment.bottomLeft,
                       child: Container(
                         child: InkWell(
@@ -143,10 +100,10 @@ class HiddenDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ),
-                  verticalSpaceLarge,
-                  verticalSpaceLarge,
-                ],
+                    verticalSpaceLarge,
+                    verticalSpaceLarge,
+                  ],
+                ),
               ),
             ),
           );

@@ -67,7 +67,7 @@ class ModalBottomSheet extends StatelessWidget {
                   } else if (action == 'editGroupTask') {
                     projects.updateUndoneTask(context: context, text: controller.text);
                   } else if (action == 'editProjectName') {
-                    projects.updateProjectTitle(
+                    projects.updateProjectDetails(
                         context: context, text: controller.text);
                     util.title = controller.text;
                   }

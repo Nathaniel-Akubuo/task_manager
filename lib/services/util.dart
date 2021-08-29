@@ -10,6 +10,8 @@ class Util extends ChangeNotifier {
   var _id;
   var _docID;
   var _color;
+  var _pickedColor;
+
   var colors = [blue, orange, teal];
 
   void openDrawer() {
@@ -73,6 +75,13 @@ class Util extends ChangeNotifier {
 
   set docID(value) {
     _docID = value;
+    notifyListeners();
+  }
+
+  get pickedColor => _pickedColor;
+
+  set pickedColor(value) {
+    _pickedColor = value;
     notifyListeners();
   }
 }

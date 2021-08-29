@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/constants/colors.dart';
+import 'package:task_manager/constants/styles.dart';
 
 class AlertDialogBox extends StatelessWidget {
   final content;
@@ -11,32 +12,30 @@ class AlertDialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      elevation: 0,
       title: Text(
         title,
-        style: Theme.of(context).textTheme.headline6,
+        style: kAgipo.copyWith(fontWeight: FontWeight.bold),
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
       content: Text(
         content,
-        style: Theme.of(context).textTheme.subtitle2,
+        style: kAgipo.copyWith(fontSize: 15),
       ),
-      backgroundColor: Theme.of(context).cardColor,
+      backgroundColor: grey,
       actions: [
         TextButton(
-          onPressed: () {
-            onPressed();
-            Navigator.of(context).pop();
-          },
+          onPressed: onPressed,
           child: Text(
             'OK',
-            style: TextStyle(color: blue),
+            style: kAgipo.copyWith(fontSize: 15, color: blue, fontWeight: FontWeight.bold),
           ),
         ),
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
             'CANCEL',
-            style: TextStyle(color: blue),
+            style: kAgipo.copyWith(fontSize: 15, color: blue, fontWeight: FontWeight.bold),
           ),
         )
       ],

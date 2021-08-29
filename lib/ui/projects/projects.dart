@@ -61,14 +61,31 @@ class Projects extends StatelessWidget {
                                 ),
                                 Container(
                                   height: 30,
-                                  width: 30,
-                                  child: IconButton(
-                                    onPressed: () => model.showBottomSheet(
-                                        action: 'editProjectName',
-                                        context: context),
-                                    color: darkGrey,
-                                    splashColor: grey,
-                                    icon: Icon(Icons.edit),
+                                  width: 100,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: IconButton(
+                                          onPressed: () => model.deleteProject(
+                                              context: context,
+                                              projectID: util.id),
+                                          color: darkGrey,
+                                          splashColor: grey,
+                                          icon: Icon(Icons.delete),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: IconButton(
+                                          onPressed: () =>
+                                              model.editProject(context),
+                                          color: darkGrey,
+                                          splashColor: grey,
+                                          icon: Icon(Icons.edit),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 )
                               ],

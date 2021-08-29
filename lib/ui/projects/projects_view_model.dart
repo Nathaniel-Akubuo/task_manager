@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:task_manager/constants/colors.dart';
+import 'package:task_manager/constants/global_variables.dart';
+import 'package:task_manager/services/projects_provider.dart';
 import 'package:task_manager/services/user_service.dart';
 import 'package:task_manager/services/util.dart';
+import 'package:task_manager/widgets/alert_dialog.dart';
+import 'package:task_manager/widgets/edit_project_dialog.dart';
 import 'package:task_manager/widgets/modal_bottom_sheet.dart';
 
 class ProjectsViewModel extends BaseViewModel {
@@ -39,4 +43,22 @@ class ProjectsViewModel extends BaseViewModel {
         .collection('$id-undone')
         .orderBy('dateCreated');
   }
+
+  void deleteProject({context, projectID}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialogBox(
+        title: 'DELETE?',
+        content: 'Do you want to delete this project?',
+        onPressed: () {
+          Provider.of<ProjectsProvider>(context, listen: false)
+              .deleteProject(context: context, projectID: projectID);
+          navigationService.popRepeated(2);
+        },
+      ),
+    );
+  }
+
+  void editProject(context) =>
+      showDialog(context: context, builder: (context) => EditProjectDialog());
 }
