@@ -1,16 +1,6 @@
 # task_manager
 
-An app that helps its users manage their daily tasks
+An app that helps its users efficiently manage their daily tasks
 
-## Getting Started
+![c0151af3692ee2aa5506380afcfa4ff6](https://user-images.githubusercontent.com/61379839/131235463-14207517-88ec-410e-87ab-e51771000824.png)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
