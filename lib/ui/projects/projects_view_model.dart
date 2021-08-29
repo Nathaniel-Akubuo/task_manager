@@ -34,7 +34,7 @@ class ProjectsViewModel extends BaseViewModel {
         .orderBy('dateCreated', descending: true);
   }
 
-  getUndone(context) {
+  Query getUndone(context) {
     var userEmail = Provider.of<UserService>(context, listen: false).email;
     var id = Provider.of<Util>(context, listen: true).id;
     return FirebaseFirestore.instance
@@ -61,4 +61,5 @@ class ProjectsViewModel extends BaseViewModel {
 
   void editProject(context) =>
       showDialog(context: context, builder: (context) => EditProjectDialog());
+
 }

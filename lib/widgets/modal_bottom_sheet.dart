@@ -13,11 +13,25 @@ import 'package:task_manager/services/util.dart';
 import 'package:task_manager/widgets/custom_textfield.dart';
 import 'package:task_manager/widgets/rounded_button.dart';
 
-class ModalBottomSheet extends StatelessWidget {
-  final controller = TextEditingController();
+class ModalBottomSheet extends StatefulWidget {
   final String? action;
+  final docID;
+  final initialText;
 
-  ModalBottomSheet({this.action});
+  ModalBottomSheet({this.action, this.docID, this.initialText});
+
+  @override
+  _ModalBottomSheetState createState() => _ModalBottomSheetState();
+}
+
+class _ModalBottomSheetState extends State<ModalBottomSheet> {
+  final controller = TextEditingController();
+
+  @override
+  void initState() {
+    controller..text = widget.initialText;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +54,7 @@ class ModalBottomSheet extends StatelessWidget {
             verticalSpaceLarge,
             RoundedButton(
                 onTap: () {
-                  if (action == 'createGroup') {
+                  if (widget.action == 'createGroup') {
                     projects.createProject(
                       context: context,
                       projectModel: ProjectModel(
@@ -49,7 +63,7 @@ class ModalBottomSheet extends StatelessWidget {
                           color: util
                               .colors[Random().nextInt(util.colors.length)]),
                     );
-                  } else if (action == 'createGroupTask') {
+                  } else if (widget.action == 'createGroupTask') {
                     projects.addToDo(
                       context: context,
                       taskModel: TaskModel(
@@ -57,16 +71,24 @@ class ModalBottomSheet extends StatelessWidget {
                           item: controller.text,
                           isChecked: false),
                     );
-                  } else if (action == 'addHomeTask') {
+                  } else if (widget.action == 'addHomeTask') {
                     task.addToDo(
                         context: context,
                         taskModel: TaskModel(
                             dateCreated: DateTime.now(),
                             item: controller.text,
                             isChecked: false));
-                  } else if (action == 'editGroupTask') {
-                    projects.updateUndoneTask(context: context, text: controller.text);
-                  } else if (action == 'editProjectName') {
+                  } else if (widget.action == 'editGroupTask') {
+                    projects.updateUndoneTask(
+                        docID: widget.docID,
+                        context: context,
+                        text: controller.text);
+                  } else if (widget.action == 'editGroupUndone') {
+                    projects.updateDoneTask(
+                        context: context,
+                        docID: widget.docID,
+                        text: controller.text);
+                  } else if (widget.action == 'editProjectName') {
                     projects.updateProjectDetails(
                         context: context, text: controller.text);
                     util.title = controller.text;
@@ -74,9 +96,9 @@ class ModalBottomSheet extends StatelessWidget {
                   navigationService.back();
                 },
                 child: Text(
-                    action == 'createGroup'
+                    widget.action == 'createGroup'
                         ? '+ CREATE NEW GROUP'
-                        : action == 'editProjectName'
+                        : widget.action == 'editProjectName'
                             ? 'SAVE'
                             : 'ADD',
                     style: kAgipo))

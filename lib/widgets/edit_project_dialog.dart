@@ -54,9 +54,13 @@ class _EditProjectDialogState extends State<EditProjectDialog> {
                   projects.updateProjectDetails(
                       context: context,
                       text: controller.text,
-                      color: util.pickedColor.value);
+                      color: util.pickedColor != null
+                          ? util.pickedColor.value
+                          : util.color.value);
                   util.title = controller.text;
-                  util.color = util.pickedColor;
+                  util.pickedColor != null
+                      ? util.color = util.pickedColor
+                      : util.color;
                   navigationService.back();
                 },
                 child: Text('SAVE', style: kAgipo))
