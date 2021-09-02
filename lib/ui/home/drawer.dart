@@ -41,7 +41,12 @@ class HiddenDrawer extends StatelessWidget {
                           if (snapshot.data != null &&
                               snapshot.data!.size != 0) {
                             List<ProjectModel> list = [];
-                            for (int i = 0; i < 3; i++) {
+                            for (int i = 0;
+                                i <
+                                    (snapshot.data!.docs.length < 3
+                                        ? snapshot.data!.docs.length
+                                        : 3);
+                                i++) {
                               list.add(ProjectModel.fromJson(
                                   snapshot.data!.docs[i].data()));
                             }
@@ -49,7 +54,7 @@ class HiddenDrawer extends StatelessWidget {
                               children: list
                                   .map((currentItem) => ProjectDrawerBubble(
                                         title: currentItem.title,
-                                        count: currentItem.count ?? 0,
+                                        count: currentItem.totalItems ?? 0,
                                         color: currentItem.color,
                                         onTap: () {
                                           util.title = currentItem.title;

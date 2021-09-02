@@ -23,7 +23,7 @@ class ProjectToDoBubble extends StatelessWidget {
       child: Dismissible(
         onDismissed: onDismissed,
         key: UniqueKey(),
-        background: Container(color: grey),
+        background: Container(color: Colors.transparent),
         child: Column(
           children: [
             Row(

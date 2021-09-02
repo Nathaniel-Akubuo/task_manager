@@ -94,10 +94,15 @@ class ProjectsProvider extends ChangeNotifier {
     QuerySnapshot undoneItems = await undone.get();
     var doneCount = doneItems.docs.length;
     var undoneCount = undoneItems.docs.length;
+    var totalItems = doneCount + undoneCount;
     var firstItem =
         undoneItems.docs.isNotEmpty ? undoneItems.docs.first.get('item') : '';
-    var percentage = (doneCount / (undoneCount + doneCount)) * 100;
-    projects.update({'firstItem': firstItem, 'count': percentage});
+    var percentage = (doneCount / totalItems) * 100;
+    projects.update({
+      'firstItem': firstItem,
+      'count': percentage,
+      'totalItems': totalItems
+    });
   }
 
   void updateProjectDetails({context, text, color}) {

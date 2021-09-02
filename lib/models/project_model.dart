@@ -7,6 +7,7 @@ class ProjectModel {
   String? firstItem;
   double? count;
   Color? color;
+  int? totalItems;
 
   ProjectModel(
       {required this.title,
@@ -14,18 +15,17 @@ class ProjectModel {
       required this.dateCreated,
       this.firstItem,
       this.count,
-      required this.color});
+      required this.color,
+      this.totalItems});
 
   static ProjectModel fromJson(Map<String, dynamic> data) => ProjectModel(
-        id: data['id'],
-        title: data['title'],
-        color: Color(data['color']),
-        count: data['count'],
-        firstItem: data['firstItem'],
-        dateCreated: DateTime.parse(
-          data['dateCreated'],
-        ),
-      );
+      id: data['id'],
+      title: data['title'],
+      color: Color(data['color']),
+      count: data['count'],
+      firstItem: data['firstItem'],
+      dateCreated: DateTime.parse(data['dateCreated']),
+      totalItems: data['totalItems']);
 
   Map<String, dynamic> toJson() => {
         'dateCreated': dateCreated.toString(),
@@ -33,6 +33,7 @@ class ProjectModel {
         'title': title,
         'firstItem': firstItem,
         'color': color!.value,
-        'count': count
+        'count': count,
+        'totalItems': totalItems
       };
 }

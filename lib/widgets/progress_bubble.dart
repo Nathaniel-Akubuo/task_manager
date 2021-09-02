@@ -102,7 +102,9 @@ class ProgressBubble extends StatelessWidget {
                         snapshot) {
                   if (snapshot.hasData) {
                     List<ProjectModel> list = [];
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i <  (snapshot.data!.docs.length < 3
+                        ? snapshot.data!.docs.length
+                        : 3); i++) {
                       list.add(
                           ProjectModel.fromJson(snapshot.data!.docs[i].data()));
                     }

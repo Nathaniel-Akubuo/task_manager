@@ -30,118 +30,112 @@ class Projects extends StatelessWidget {
                   onPressed: () => model.showBottomSheet(
                       context: context, action: 'createGroupTask'),
                 ),
-                body: SingleChildScrollView(
+                body: ListView(
                   padding: EdgeInsets.only(
                       left: 15,
                       right: 15,
                       bottom: _mediaQuery.viewInsets.bottom),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      verticalSpaceRegular,
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        height: _mediaQuery.size.height * 0.16,
-                        width: _mediaQuery.size.width,
-                        decoration: BoxDecoration(
-                            color: grey, borderRadius: kBorderRadius),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ProjectCompletionGauge(
-                                  doneStream:
-                                      model.getDone(context).snapshots(),
-                                  undoneStream:
-                                      model.getUndone(context).snapshots(),
-                                  color: util.color,
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 100,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: IconButton(
-                                          onPressed: () => model.deleteProject(
-                                              context: context,
-                                              projectID: util.id),
-                                          color: darkGrey,
-                                          splashColor: grey,
-                                          icon: Icon(Icons.delete),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: IconButton(
-                                          onPressed: () =>
-                                              model.editProject(context),
-                                          color: darkGrey,
-                                          splashColor: grey,
-                                          icon: Icon(Icons.edit),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            Text(
-                              util.title.toUpperCase(),
-                              style: kAgipo.copyWith(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: util.color.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Text(
-                                DateFormat('MMMM dd').format(DateTime.now()),
-                                style: kAgipo.copyWith(
-                                  color: util.color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
+                  children: [
+                    verticalSpaceRegular,
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      height: _mediaQuery.size.height * 0.16,
+                      width: _mediaQuery.size.width,
+                      decoration: BoxDecoration(
+                          color: grey, borderRadius: kBorderRadius),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              ProjectCompletionGauge(
+                                doneStream: model.getDone(context).snapshots(),
+                                undoneStream:
+                                    model.getUndone(context).snapshots(),
+                                color: util.color,
                               ),
-                            )
+                              Container(
+                                height: 30,
+                                width: 100,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: IconButton(
+                                        onPressed: () => model.deleteProject(
+                                            context: context,
+                                            projectID: util.id),
+                                        color: darkGrey,
+                                        splashColor: grey,
+                                        icon: Icon(Icons.delete),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: IconButton(
+                                        onPressed: () =>
+                                            model.editProject(context),
+                                        color: darkGrey,
+                                        splashColor: grey,
+                                        icon: Icon(Icons.edit),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Text(
+                            util.title.toUpperCase(),
+                            style: kAgipo.copyWith(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: util.color.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Text(
+                              DateFormat('MMMM dd').format(DateTime.now()),
+                              style: kAgipo.copyWith(
+                                color: util.color,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    verticalSpaceLarge,
+                    Container(
+                      constraints: BoxConstraints(
+                          minHeight: _mediaQuery.size.height * 0.2,
+                          maxHeight: _mediaQuery.size.height * 0.515),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: grey, borderRadius: kBorderRadius),
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            ProjectListStreamBuilder(
+                              stream: model.getUndone(context).snapshots(),
+                              isDoneList: false,
+                            ),
+                            ProjectListStreamBuilder(
+                              stream: model.getDone(context).snapshots(),
+                              isDoneList: true,
+                            ),
                           ],
                         ),
                       ),
-                      verticalSpaceLarge,
-                      Container(
-                        constraints: BoxConstraints(
-                            minHeight: _mediaQuery.size.height * 0.2,
-                            maxHeight: _mediaQuery.size.height * 0.515),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: grey, borderRadius: kBorderRadius),
-                        child: SingleChildScrollView(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          physics: BouncingScrollPhysics(),
-                          child: Column(
-                            children: [
-                              ProjectListStreamBuilder(
-                                stream: model.getUndone(context).snapshots(),
-                                isDoneList: false,
-                              ),
-                              ProjectListStreamBuilder(
-                                stream: model.getDone(context).snapshots(),
-                                isDoneList: true,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),
