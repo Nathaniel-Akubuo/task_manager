@@ -38,12 +38,13 @@ class HiddenDrawer extends StatelessWidget {
                         builder: (context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                                 snapshot) {
-                          if (snapshot.data != null && snapshot.data!.size != 0) {
+                          if (snapshot.data != null &&
+                              snapshot.data!.size != 0) {
                             List<ProjectModel> list = [];
-                            snapshot.data!.docs.forEach((element) {
-                              list.add(ProjectModel.fromJson(element.data()));
-                            });
-                            list.removeRange(3, list.length);
+                            for (int i = 0; i < 3; i++) {
+                              list.add(ProjectModel.fromJson(
+                                  snapshot.data!.docs[i].data()));
+                            }
                             return Column(
                               children: list
                                   .map((currentItem) => ProjectDrawerBubble(

@@ -21,7 +21,10 @@ class ProjectsViewModel extends BaseViewModel {
           ),
         ),
         context: context,
-        builder: (context) => ModalBottomSheet(action: action),
+        builder: (context) => ModalBottomSheet(
+          action: action,
+          initialText: '',
+        ),
       );
 
   getDone(context) {
@@ -61,5 +64,4 @@ class ProjectsViewModel extends BaseViewModel {
 
   void editProject(context) =>
       showDialog(context: context, builder: (context) => EditProjectDialog());
-
 }

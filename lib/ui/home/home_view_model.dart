@@ -18,7 +18,7 @@ class HomeViewModel extends BaseViewModel {
           ),
         ),
         context: context,
-        builder: (context) => ModalBottomSheet(action: action),
+        builder: (context) => ModalBottomSheet(action: action, initialText: '',),
       );
 
   getUndone() {

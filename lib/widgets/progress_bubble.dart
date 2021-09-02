@@ -102,10 +102,10 @@ class ProgressBubble extends StatelessWidget {
                         snapshot) {
                   if (snapshot.hasData) {
                     List<ProjectModel> list = [];
-                    snapshot.data!.docs.forEach((element) {
-                      list.add(ProjectModel.fromJson(element.data()));
-                    });
-                    list.removeRange(3, list.length);
+                    for (int i = 0; i < 3; i++) {
+                      list.add(
+                          ProjectModel.fromJson(snapshot.data!.docs[i].data()));
+                    }
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: list
@@ -140,8 +140,7 @@ class ProgressBubble extends StatelessWidget {
               Container(
                 height: 8,
                 width: 8,
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: color),
+                decoration: BoxDecoration(shape: BoxShape.circle, color: color),
               ),
               horizontalSpaceTiny,
               Text(

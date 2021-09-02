@@ -53,55 +53,56 @@ class _ModalBottomSheetState extends State<ModalBottomSheet> {
             ),
             verticalSpaceLarge,
             RoundedButton(
-                onTap: () {
-                  if (widget.action == 'createGroup') {
-                    projects.createProject(
-                      context: context,
-                      projectModel: ProjectModel(
-                          title: controller.text,
-                          dateCreated: DateTime.now(),
-                          color: util
-                              .colors[Random().nextInt(util.colors.length)]),
-                    );
-                  } else if (widget.action == 'createGroupTask') {
-                    projects.addToDo(
+              onTap: () {
+                if (widget.action == 'createGroup') {
+                  projects.createProject(
+                    context: context,
+                    projectModel: ProjectModel(
+                        title: controller.text,
+                        dateCreated: DateTime.now(),
+                        color:
+                            util.colors[Random().nextInt(util.colors.length)]),
+                  );
+                } else if (widget.action == 'createGroupTask') {
+                  projects.addToDo(
+                    context: context,
+                    taskModel: TaskModel(
+                        dateCreated: DateTime.now(),
+                        item: controller.text,
+                        isChecked: false),
+                  );
+                } else if (widget.action == 'addHomeTask') {
+                  task.addToDo(
                       context: context,
                       taskModel: TaskModel(
                           dateCreated: DateTime.now(),
                           item: controller.text,
-                          isChecked: false),
-                    );
-                  } else if (widget.action == 'addHomeTask') {
-                    task.addToDo(
-                        context: context,
-                        taskModel: TaskModel(
-                            dateCreated: DateTime.now(),
-                            item: controller.text,
-                            isChecked: false));
-                  } else if (widget.action == 'editGroupTask') {
-                    projects.updateUndoneTask(
-                        docID: widget.docID,
-                        context: context,
-                        text: controller.text);
-                  } else if (widget.action == 'editGroupUndone') {
-                    projects.updateDoneTask(
-                        context: context,
-                        docID: widget.docID,
-                        text: controller.text);
-                  } else if (widget.action == 'editProjectName') {
-                    projects.updateProjectDetails(
-                        context: context, text: controller.text);
-                    util.title = controller.text;
-                  }
-                  navigationService.back();
-                },
-                child: Text(
-                    widget.action == 'createGroup'
-                        ? '+ CREATE NEW GROUP'
-                        : widget.action == 'editProjectName'
-                            ? 'SAVE'
-                            : 'ADD',
-                    style: kAgipo))
+                          isChecked: false));
+                } else if (widget.action == 'editGroupTask') {
+                  projects.updateUndoneTask(
+                      docID: widget.docID,
+                      context: context,
+                      text: controller.text);
+                } else if (widget.action == 'editGroupUndone') {
+                  projects.updateDoneTask(
+                      context: context,
+                      docID: widget.docID,
+                      text: controller.text);
+                } else if (widget.action == 'editProjectName') {
+                  projects.updateProjectDetails(
+                      context: context, text: controller.text);
+                  util.title = controller.text;
+                }
+                navigationService.back();
+              },
+              child: Text(
+                  widget.action == 'createGroup'
+                      ? '+ CREATE NEW GROUP'
+                      : widget.action == 'editProjectName'
+                          ? 'SAVE'
+                          : 'ADD',
+                  style: kAgipo),
+            )
           ],
         ),
       ),
